@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/</loc>
+    <lastmod>2020-04-02T14:40:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/post/</loc>
+    <lastmod>2020-04-02T14:40:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/post/1/</loc>
+    <lastmod>2020-04-02T14:40:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/authors/</loc>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/series/</loc>
+  </url>
+  
+  <url>
+    <loc>https://github.com/NeutralAngler/neutralangler.github.io/tags/</loc>
+  </url>
+  
+</urlset>
