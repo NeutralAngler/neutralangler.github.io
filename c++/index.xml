@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>NeutralAngler</title>
-    <link>https://neutralangler.github.io/</link>
-    <description>Recent content on NeutralAngler</description>
+    <title>C&#43;&#43;s on NeutralAngler</title>
+    <link>https://neutralangler.github.io/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43;s on NeutralAngler</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 02 Apr 2020 14:40:34 +0800</lastBuildDate>
     
-	<atom:link href="https://neutralangler.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://neutralangler.github.io/c++/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
