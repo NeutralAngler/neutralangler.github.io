@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='2.1 基本内置类型  C&#43;&#43;定义了一套包括 算术类型（arithmetic type） 和 空类型（void） 在内的基本数据类型。 其中算术类型包括了字符、整型数、布尔值和浮点数。 空类型： 不对应任何具体的值，不能定义 void 类型变量。  2.1.1 算术类型  算术类型分为两类：整型（包括字符和布尔类型在内）和浮点型。 C&#43;&#43;中 算术类型的长度（也就是所占字节）在不同系统是有所差别的 ，所表示的数据范围也不同。 基本字符类型是char， 一个char的内存应确保可以存放机器基本字符集中任意字符对应的值 ，所以它的大小一般是一个字节，也就是8位。 其它字符类型（如char16_t、wchar_t、char32_t）则用于扩展字符集 。其中wchar_t类型确保可以存放机器最大扩展字符集中任意一个字符。而char16_t和char32_t则为了Unicode字符集服务。 C&#43;&#43;规定了一个int至少和一个short一样大，一个long至少和一个int一样大，一个long long至少和一个long一样大。其中long long是在C&#43;&#43;11中新定义的。 可寻址的最小内存块称为 “字节”（byte） ，大多数机器的字节为8 位（bit） ； 计算机中进行数据存储和数据处理的运算的基本单元 被称为 “字”（word） ，它的长度（即字长）通常是几个字节，现代计算机多为16位、32位、64位。 大多数计算机将内存中的每一个字节与一个数字关联起来，这个数字就是 地址(address) 。 程序员可使用 某个地址 来表示 从这个地址开始的一定大小的内存块 。但是如果要知道该地址的具体含义，则要知道储存在该地址的数据的类型，因为 类型决定了数据所占的内存块大小和如何解释该内存块中的内容。 浮点型可以表示单精度，双精度和拓展精度值。 C&#43;&#43;标准指定了一个浮点数有效位数的最小值，然而大多数编译器都实现了更高的精度。通常float是4个字节、double是8个字节。 一般来说，类型float和double分别有7和16个有效位。 除了布尔型和拓展的正字符型外，其它整型还可以分为有符号和无符号两种。 其中 int 、 short 、 long 、 long long 都是带符号的。只需在前面添加 unsigned 即可得到无符号类型。 unsigned int 的简写是 unsigned 。 与其它整型不同，字符类型分为三种 ：char、signed char和unsigned char。 其中char与signed char是不一样的。 尽管字符型有三种，但表达型只有两种：有符号和无符号。而char实际上表示为这两种之一，具体是哪种由编译器决定。 执行浮点运算时使用double ， 这是因为double精度比float更大，同时与float的计算速度相差不多，甚至在某些计算机上运算速度还要快于float。  2.'>
+<meta name='theme-color' content='#ffcd00'>
+
+<meta property='og:title' content='第二章 变量和基本类型 • NeutralAngler'>
+<meta property='og:description' content='2.1 基本内置类型  C&#43;&#43;定义了一套包括 算术类型（arithmetic type） 和 空类型（void） 在内的基本数据类型。 其中算术类型包括了字符、整型数、布尔值和浮点数。 空类型： 不对应任何具体的值，不能定义 void 类型变量。  2.1.1 算术类型  算术类型分为两类：整型（包括字符和布尔类型在内）和浮点型。 C&#43;&#43;中 算术类型的长度（也就是所占字节）在不同系统是有所差别的 ，所表示的数据范围也不同。 基本字符类型是char， 一个char的内存应确保可以存放机器基本字符集中任意字符对应的值 ，所以它的大小一般是一个字节，也就是8位。 其它字符类型（如char16_t、wchar_t、char32_t）则用于扩展字符集 。其中wchar_t类型确保可以存放机器最大扩展字符集中任意一个字符。而char16_t和char32_t则为了Unicode字符集服务。 C&#43;&#43;规定了一个int至少和一个short一样大，一个long至少和一个int一样大，一个long long至少和一个long一样大。其中long long是在C&#43;&#43;11中新定义的。 可寻址的最小内存块称为 “字节”（byte） ，大多数机器的字节为8 位（bit） ； 计算机中进行数据存储和数据处理的运算的基本单元 被称为 “字”（word） ，它的长度（即字长）通常是几个字节，现代计算机多为16位、32位、64位。 大多数计算机将内存中的每一个字节与一个数字关联起来，这个数字就是 地址(address) 。 程序员可使用 某个地址 来表示 从这个地址开始的一定大小的内存块 。但是如果要知道该地址的具体含义，则要知道储存在该地址的数据的类型，因为 类型决定了数据所占的内存块大小和如何解释该内存块中的内容。 浮点型可以表示单精度，双精度和拓展精度值。 C&#43;&#43;标准指定了一个浮点数有效位数的最小值，然而大多数编译器都实现了更高的精度。通常float是4个字节、double是8个字节。 一般来说，类型float和double分别有7和16个有效位。 除了布尔型和拓展的正字符型外，其它整型还可以分为有符号和无符号两种。 其中 int 、 short 、 long 、 long long 都是带符号的。只需在前面添加 unsigned 即可得到无符号类型。 unsigned int 的简写是 unsigned 。 与其它整型不同，字符类型分为三种 ：char、signed char和unsigned char。 其中char与signed char是不一样的。 尽管字符型有三种，但表达型只有两种：有符号和无符号。而char实际上表示为这两种之一，具体是哪种由编译器决定。 执行浮点运算时使用double ， 这是因为double精度比float更大，同时与float的计算速度相差不多，甚至在某些计算机上运算速度还要快于float。  2.'>
+<meta property='og:url' content='https://neutralangler.github.io/c&#43;&#43;/primer_2/'>
+<meta property='og:site_name' content='NeutralAngler'>
+<meta property='og:type' content='article'><meta property='article:section' content='C&#43;&#43;'><meta property='article:published_time' content='2020-04-11T19:32:40&#43;08:00'/><meta property='article:modified_time' content='2020-04-11T19:32:40&#43;08:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.68.3" />
+
+  <title>第二章 变量和基本类型 • NeutralAngler</title>
+  <link rel='canonical' href='https://neutralangler.github.io/c&#43;&#43;/primer_2/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.ab98e12b.css'><link rel='stylesheet' href='/css/custom.css'><style>
+:root{--color-accent:#ffcd00;}
+</style>
+
+  
+
+</head>
+<body class='page type-C&#43;&#43; has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.png'>
+      </a>
+    </div>
+    
+    <h2 class='title site-title '>
+      <a href='/'>
+      NeutralAngler
+      </a>
+    </h2>
+    <div class='desc'>
+    技术爱好者/游戏开发者/懒癌患者/平凡人
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-search sep-after'>
+  <header>
+    <h4 class='title widget-title'>Search</h4>
+  </header>
+
+  <form action='/search' id='search-form' class='search-form'>
+    <label>
+      <span class='screen-reader-text'>Search</span>
+      <input id='search-term' class='search-term' type='search' name='q' placeholder='Search&hellip;'>
+    </label></form>
+
+</section>
+<section class='widget widget-taxonomy_cloud sep-after'>
+  <header>
+    <h4 class='title widget-title'>Tags</h4>
+  </header>
+
+  <div class='container list-container'>
+  <ul class='list taxonomy-cloud'><span>Not a single Tag!</span></ul>
+</div>
+
+
+</section>
+</div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul><li class='item'>
+        <a href='https://github.com/MunifTanjim/minimo'>Repo</a>
+      </li></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'>
+    
+    <style>.widget-breadcrumbs li:after{content:'\2f '}</style>
+  <section class='widget widget-breadcrumbs sep-after'>
+    <nav id='breadcrumbs'>
+      <ol><li><a href='/'>NeutralAngler</a></li><li><a href='/c&#43;&#43;/'>C&#43;&#43;s</a></li><li><span>第二章 变量和基本类型</span></li></ol>
+    </nav>
+  </section></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>NeutralAngler</p><p class='desc site-desc'>技术爱好者/游戏开发者/懒癌患者/平凡人</p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>第二章 变量和基本类型</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2020-04-11T19:32:40&#43;08:00'>2020, Apr 11</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+6 mins read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <h1 id="21--基本内置类型">2.1  基本内置类型</h1>
+<ol>
+<li>C++定义了一套包括 <strong>算术类型（arithmetic type）</strong> 和 <strong>空类型（void）</strong> 在内的基本数据类型。</li>
+<li>其中算术类型包括了字符、整型数、布尔值和浮点数。</li>
+<li><strong>空类型：</strong> 不对应任何具体的值，不能定义 void 类型变量。</li>
+</ol>
+<h2 id="211--算术类型">2.1.1  算术类型</h2>
+<ol>
+<li>算术类型分为两类：整型（包括字符和布尔类型在内）和浮点型。</li>
+<li>C++中 <em>算术类型的长度（也就是所占字节）在不同系统是有所差别的</em> ，所表示的数据范围也不同。</li>
+<li>基本字符类型是char， <em>一个char的内存应确保可以存放机器基本字符集中任意字符对应的值</em> ，所以它的大小一般是一个字节，也就是8位。</li>
+<li><strong>其它字符类型（如char16_t、wchar_t、char32_t）则用于扩展字符集 。其中wchar_t类型确保可以存放机器最大扩展字符集中任意一个字符。而char16_t和char32_t则为了Unicode字符集服务。</strong></li>
+<li><em>C++规定了一个int至少和一个short一样大，一个long至少和一个int一样大，一个long long至少和一个long一样大。其中long long是在C++11中新定义的。</em></li>
+<li>可寻址的最小内存块称为 <strong>“字节”（byte）</strong> ，大多数机器的字节为8 <strong>位（bit）</strong> ； <strong>计算机中进行数据存储和数据处理的运算的基本单元</strong> 被称为 <strong>“字”（word）</strong> ，它的长度（即字长）通常是几个字节，现代计算机多为16位、32位、64位。</li>
+<li>大多数计算机将内存中的每一个字节与一个数字关联起来，这个数字就是 <strong>地址(address)</strong> 。</li>
+<li>程序员可使用 <strong>某个地址</strong> 来表示 <strong>从这个地址开始的一定大小的内存块</strong> 。但是如果要知道该地址的具体含义，则要知道储存在该地址的数据的类型，因为 <strong>类型决定了数据所占的内存块大小和如何解释该内存块中的内容。</strong></li>
+<li>浮点型可以表示单精度，双精度和拓展精度值。</li>
+<li>C++标准指定了一个浮点数有效位数的最小值，然而大多数编译器都实现了更高的精度。通常float是4个字节、double是8个字节。 <strong>一般来说，类型float和double分别有7和16个有效位。</strong></li>
+<li><strong>除了布尔型和拓展的正字符型外，其它整型还可以分为有符号和无符号两种。</strong> 其中 int 、 short 、 long 、 long long 都是带符号的。只需在前面添加 unsigned 即可得到无符号类型。</li>
+<li>unsigned int 的简写是 unsigned 。</li>
+<li><strong>与其它整型不同，字符类型分为三种</strong> ：char、signed char和unsigned char。 <strong>其中char与signed char是不一样的。</strong></li>
+<li><strong>尽管字符型有三种，但表达型只有两种：有符号和无符号。而char实际上表示为这两种之一，具体是哪种由编译器决定。</strong></li>
+<li><strong>执行浮点运算时使用double</strong> ， <em>这是因为double精度比float更大，同时与float的计算速度相差不多，甚至在某些计算机上运算速度还要快于float。</em></li>
+</ol>
+<h2 id="212--类型转换">2.1.2  类型转换</h2>
+<ol>
+<li>在类型定义的类型对象能参与的运算中，有一种运算能被大多数类型支持，就是类型的转换。</li>
+<li><strong>布尔类型与其它类型的相互转换：</strong>  <em>0-&gt;false，非0值-&gt;true；true-&gt;1、false-&gt;0</em></li>
+<li><strong>浮点类型与整型的相互转换：</strong>  <em>浮点型-&gt;整型，进行近似处理，截断小数部分；整型-&gt;浮点型，小数部分记为0，如果该整型内存大于浮点型，则可能会发送精度的丢失。</em></li>
+<li><em>如果赋值给有符号类型一个超出其表示范围的值，它的结果是未知的，因为这个行为是未定义的。</em></li>
+<li><strong>未定义的（undefined）：</strong> 无法预知的行为，源于编译器无需（有时是不能）检测的错误。即使代码编译通过了，仍有可能产生错误，生成与期望不符的垃圾数据。</li>
+<li><strong>切勿混用有符号类型和无符号类型：</strong>  <em>如果表达式里有无符号类型，则整个表达式的有类型将会被自动转换成无符号类型，然后进行运算。</em></li>
+</ol>
+<p>##2.1.3  类字面值</p>
+<ol>
+<li>每个 <strong>字面值（literal）</strong> 都对应了一种数据类型，而它的 <strong>形式和值</strong> 决定了它的数据类型。</li>
+<li><strong>整型字面值：</strong> 可以表现为十进制数、八进制数、十六进制数的形式。 <strong>默认情况下，十进制常量是有符号类型。八进制和十六进制可能是有符号型也可能是无符号型。</strong>  <em>而十进制常量的类型是int、long和long long 中能容纳其值且长度最小的那个。八进制（以0开头）和十六进制（0x或0X开头）则是 int 、 unsigned int 、long 、 unsigned long 、 long long 和 unsigned long long 中长度最小的那个。</em></li>
+<li><strong>short 没有对应的整型字面值。</strong></li>
+<li><strong>浮点型字面值：</strong> 表示为一个小数或以科学计数法表示的指数，其中指数部分使用 E 或 e 标识。默认情况下，浮点型常量是一个 double 类型。</li>
+<li><strong>字符字面值：</strong> 使用单括号括起来的一个字符，比如 &lsquo;a&rsquo; 、 &lsquo;\n&rsquo; 。</li>
+<li><strong>字符串字面值：</strong> 使用双引号括起来的零个或多个字符，比如 &quot; &quot; 、 &ldquo;ads da&rdquo; 。 <em>C++的字符串字面值其实是由字符常量构成的，最后一个元素为空字符（'\0&rsquo;）的</em>  <strong>char数组（array）</strong>。</li>
+<li>如果两字符串相邻，且仅由 <strong>空白（比如制表符、换行符、空格）</strong> 分隔，那么它俩其实是一个相连的整体。</li>
+<li><strong>转义序列（escape sequence）：</strong> 用于打印两类字符： <strong>计算机中不可打印的字符</strong> ，比如退格、换行等；以及 <strong>C++中具有特殊含义的字符</strong> ，比如单双引号、问号、反斜线等。</li>
+<li><strong>泛式的转义序列：</strong> <em>其形式是\x后紧接1个或多个十六进制数字，或者\后紧接1~3个八进制数字，其中数字部分标识的是字符对应的数字。</em> <strong>如果\后紧接的八进制数字超过3个，则只有前三个数字与\构成转义序列。因为char类型一般为8位。</strong></li>
+<li><strong>布尔字面值：</strong> true和false。</li>
+<li><strong>nullptr 是一个指针字面值。</strong> 表示空地址。</li>
+<li>通过添加前缀和后缀，可以改变整型、浮点型、和字符型常量的数据类型。</li>
+</ol>
+<p>字符和字符串字面值
+|前缀|含义|类型|
+|&mdash;|&mdash;|&mdash;|
+|前缀u|Unicode16字符|char16_t|
+|前缀U|Unicode32字符|char32_t|
+|前缀L|宽字符|wchar_t|
+|前缀u8|UTF-8|char|
+整型常量
+|后缀|最小匹配类型|
+|&mdash;|&mdash;|
+|U or u|unsigned int|
+|L or l|long|
+|LL or ll|long long|
+浮点型字面值
+|后缀|类型|
+|&mdash;|&mdash;|
+| F or f|float|
+| L or l|long double|</p>
+<hr>
+<h1 id="22--变量">2.2  变量</h1>
+<ol>
+<li>C++中每个变量都有其数据类型，数据类型决定了变量所占内存空间大小、所能储存的值的范围，以及其能参与的运算。</li>
+</ol>
+<h2 id="221--变量定义">2.2.1  变量定义</h2>
+<ol>
+<li>变量定义的基本形式： <strong>类型说明符（type specifier）</strong> 后接一个或多个变量名组成的列表，同时声明多个同类型变量，变量名之间使用逗号分隔，以分号结束。定义时还可以对指定的变量进行 <strong>初始化（initialized）</strong> 。</li>
+<li><strong>对象（object）</strong> 和变量其实是不同的叫法。都是指一块能存储数据并具有数据类型的内存空间。</li>
+<li><strong>在C++中，初始化和赋值是两种完全不同的操作。</strong> 初始化不是赋值，初始化的含义是指在声明新变量的同时赋予一个值。而赋值的含义是消除变量之前储存的值，然后用一个新值来替换。</li>
+<li>C++定义了多种不同的初始化形式。比如：</li>
+</ol>
+<pre><code>int a = 0;
+int b = {0};
+int c{0};
+int d = (0);
+int e(0);
+</code></pre><ol start="5">
+<li>作为C++11新标准的一部分，列表初始化得到全面应用，在这之前只能在某些场合使用列表初始化。现在无论是 <strong>初始化对象还是对变量赋新值</strong> ，都可以使用列表初始化。</li>
+<li><strong>列表初始化：</strong> 使用花括号来初始化变量。 <strong>当用于内置类型时的好处：使用列表初始化且初始值存在丢失信息的风险时，编译器会报错。</strong> 比如使用列表初始化将 double 类型的值初始化一个 int 变量。</li>
+<li><strong>默认初始化（default initialized）：</strong> 如果定义变量时没有进行初始化，则变量被默认初始化。 <strong>至于默认值是什么，则由 变量的类型和定义变量的位置 决定。</strong></li>
+<li><strong>如果是内置类型，则它的值由定义的位置决定。定义于任何函数之外的变量被初始化为0。然而一种例外是：定义在函数体内部的内置类型变量将不被初始化，其值是未定义的。</strong></li>
+<li><strong>每个类的设计者各自决定其初始化对象的方式，而且，是否允许不经初始化就定义对象，也由类的设计者自己决定。如果类的设计者允许默认初始化，它将决定对象的初始值是什么。</strong></li>
+</ol>
+<h2 id="222--声明和定义的关系">2.2.2  声明和定义的关系</h2>
+<ol>
+<li>C++支持 <strong>分离式编译（separate compilation）</strong> ，该机制允许将程序分割成若干文件，每个文件都可以被单独编译。这样有利于把程序拆成多个逻辑部分来编写。</li>
+<li><strong>声明（declaration）：规定了数据的名字和类型，使得名字为程序所知。</strong></li>
+<li><strong>定义（definition）：在声明的基础上，定义还申请了存储空间并为其赋初值。</strong></li>
+<li><strong>如果想声明一个变量而非定义它，就在变量名前加关键字 extern ，并且不要显式地初始化。如果使用了 extern ，但显式初始化了，则变成了定义。注意：如果在函数体内部试图初始化一个使用extern声明的变量，编译器会报错。</strong></li>
+<li>任何包含了显示初始化的声明即为定义。</li>
+<li><strong>变量能且只能被定义一次，但是可以被多次声明。</strong></li>
+<li><strong>如果要在多个文件中使用同一个变量，则必须将声明和定义分开。</strong> 此时变量的定义能且只能出现在一个文件中，而用到该变量的文件必须对其进行声明，但不能进行重复定义。</li>
+<li>C++是一种 <strong>静态类型（statically typed）</strong> 的语言，其含义是：在编译阶段检查类型。其中，检查类型的过程被称为 <strong>类型检查（type checking）</strong> 。</li>
+</ol>
+<pre><code>extern int a;           //声明
+extern int b = 10;   //声明并定义
+
+//多次声明
+extern int e;
+extern int e;
+extern int e;
+</code></pre><h2 id="223--标识符">2.2.3  标识符</h2>
+<ol>
+<li>C++的 <strong>标识符（identifier）</strong> 由字母、数字和下划线组成，其中不能以数字开头。</li>
+<li>标识符的长度没有限制，但是 <strong>C++区分大小写</strong> 。</li>
+<li>C++保留了一些名字供语言使用 ，这些名字不能被用作标识符，比如 <strong>关键字</strong> 。</li>
+<li>变量命名规范：
+<blockquote>
+<ul>
+<li>标识符要能体现含义；</li>
+<li>一般使用小写字母；</li>
+<li>用户自定义的类名一般以大写字母开头；</li>
+<li>如果标识符有多个单词组成，单词之间应该有明显区分。</li>
+</ul>
+</blockquote>
+</li>
+<li>最好别使用连续两个下划线开头，或以一个下划线后接大写字母开头的标识符。这些一般是C++的保留名。</li>
+</ol>
+<h2 id="224--名字的作用域">2.2.4  名字的作用域</h2>
+<ol>
+<li><strong>作用域（space）</strong> 是程序的一部分，在其中名字有特定的含义。 <strong>C++中的作用域都以花括号分隔。</strong></li>
+<li><strong>同一个名字在不同的作用域中可能指向不同的实体。</strong></li>
+<li><em>名字的有效区域是从名字的声明语句开始，以声明语句所在作用域的末端为结束。</em></li>
+<li><strong>全局作用域（global scope）</strong> 中声明的名字在整个程序的范围内都可以使用。比如main函数。</li>
+<li>不在全局作用域中声明的变量，都具有 <strong>块作用域（block scope）</strong> 。这里的块是指<strong>函数体和语句块</strong>。</li>
+<li>作用域能实现嵌套，被包含（嵌套）的作用域被称为 <strong>内层作用域（inner scope）</strong> ，包含别的作用域的作用域被称为 <strong>外层作用域（outer scope）</strong> 。</li>
+<li><strong>某个作用域一旦声明了某个名字，它的所有内层作用域都可以访问该名字。同时允许在内层作用域中重新定义外层作用域已有的名字。</strong></li>
+<li><strong>可以使用作用域操作符（::）来覆盖默认的作用域规则。当作用域操作符左侧为空时，则请求获取作用域操作符右侧名字对应的全局作用域中的变量。</strong></li>
+</ol>
+<pre><code>#include &lt;iostream&gt;
+int a = 2;
+int main()
+{
+    long a =3; //在内层作用域中重新定义外层作用域已有的名字
+
+    cout &lt;&lt; ::a;
+    //此时使用的是全局作用域中的a
+}
+</code></pre><hr>
+<h1 id="23--复合类型">2.3  复合类型</h1>
+<ol>
+<li><strong>复合类型（compound type）：</strong> 基于其它类型定义的类型。</li>
+<li>一条声明语句由一个 <strong>基本数据类型（base type）</strong> 和紧接着的一个 <strong>声明符（declaration）列表</strong> 组成。而简单的声明符就是变量名，复杂点的就类似于指针的 * 变量名。如果在一条声明语句中声明多个变量，则它们的基本数据类型都是相同的，因为一条声明语句只有一条基本数据类型。</li>
+</ol>
+<h2 id="231-引用">2.3.1 引用</h2>
+<ol>
+<li><strong>引用（reference）：</strong> 为对象起了别名。通过将声明符写成 <strong>&amp;d</strong> 的形式，其中的d是变量名。</li>
+<li>C++11新增了<strong>右值引用（rvalue reference）</strong>，主要用于内置类。大部分情况下，使用的引用都是 <strong>左值引用（lvalue reference）</strong> 。</li>
+<li>与一般初始化变量是通过拷贝=右侧运算对象的值，然后储存到左侧运算对象不同。定义引用时，程序将引用与初始值绑定，而不是拷贝后储存到新对象。一旦定义完成，引用与它的初始值对象将会 <strong>一直绑定</strong> 。</li>
+<li><strong>引用必须初始化。</strong></li>
+<li><strong>引用并非对象，只是别名</strong> 。所以它没有实体，也就是没有内存和值。</li>
+<li>又由于引用并非对象，所以 <strong>不能定义引用的引用</strong> 。</li>
+</ol>
+<pre><code>int main(){
+	int ival=1024;
+	int &amp;refVal=ival;
+	int &amp;(&amp;refVal2)=refVal; //不允许定义对引用的引用
+}
+</code></pre><ol start="7">
+<li>定义一个引用后，<strong>对引用的所有操作都是对于它绑定的对象上进行</strong> 。</li>
+<li>允许在一条语句中定义多个引用，但是每个声明符都要是&amp;d的形式。</li>
+<li><strong>除了两种特殊情况（const 引用可绑定非 const 对象，基类引用可绑定派生类对象），引用的类型都要与与之绑定的对象严格匹配。而且不能与字面值或某个表达式的计算结果绑定。</strong></li>
+</ol>
+<h2 id="232-指针">2.3.2 指针</h2>
+<ol>
+<li>**指针（pointer）：<strong>是</strong>指向（refer to）**另外一种类型的复合类型。</li>
+<li><strong>指针与引用的不同：</strong>
+<blockquote>
+<ol>
+<li>指针本身是一个对象，有自己的内存和值，允许对其进行拷贝和赋值。引用不是。</li>
+<li>指针可以改变指向的对象。引用不行。</li>
+<li>指针不要求初始化。引用必须初始化。</li>
+</ol>
+</blockquote>
+</li>
+<li>与其它内置类型相同的是， <strong>在块作用域内未初始化的指针的值是未定义的。</strong></li>
+<li>允许在一条语句中定义多个指针，但是每个声明符都要是 *<strong>d</strong> 的形式，其中d是变量名。</li>
+<li>因为引用不是对象，没有自己的地址，所以 <strong>不能定义指向引用的指针</strong> 。</li>
+</ol>
+<pre><code>int s= 2;
+int&amp; *a = ss; //这是不允许的，编译器会报错
+</code></pre><ol start="6">
+<li><strong>除了两种特殊情况（const 指针可指向非 const 对象，基类指针可指向派生类对象），指针的类型都要与它所指向的对象严格匹配。</strong></li>
+<li>指针存放某个对象的地址，要想获取某个对象的地址，要使用 <strong>取地址运算符（&amp;）</strong> 。</li>
+<li>指针值应该属于下列4种状态之一：
+<blockquote>
+<ol>
+<li>指向一个对象；</li>
+<li>指向紧邻对象所占空间的下一个位置；</li>
+<li>空指针，意味着其没有指向任何对象；</li>
+<li>无效指针，除上述三种情况以外的其它值。</li>
+</ol>
+</blockquote>
+</li>
+<li><strong>试图拷贝或以其它方式访问无效指针的值都将引发错误</strong> ，这种行为是<strong>未定义的</strong>，编译器不会检查此类错误。</li>
+<li>尽管第2、3种形式的指针是有效的，但试图访问这类指针的值是不被允许的，后果是 <strong>未定义的</strong> 。</li>
+<li>如果指针指向一个对象，则允许使用 <strong>解引用符（ * ）</strong> 来访问该对象。</li>
+<li>运算符可以通过重载来获得多种意义。</li>
+<li><strong>空指针（null pointer）：</strong> 该指针不指向任何对象。</li>
+<li>可以通过三个方法来初始化指针为空指针：
+<blockquote>
+<ol>
+<li>使用字面值 <strong>nullptr</strong> 来初始化指针。 nullptr 是C++11刚引入的一种特殊类型的字面值，它可以被转换成任意其他的指针类型；</li>
+<li>直接使用<strong>字面值0</strong>对指针初始化来生成空指针；</li>
+<li>以前还使用名为 <strong>NULL</strong> 的 <strong>预处理变量（preprocessor variable）</strong> 来给指针赋值，这个 <strong>宏（也就是预处理变量）</strong> 在头文件 cstdlib 中定义，它的值就是0；</li>
+</ol>
+</blockquote>
+</li>
+<li>预处理变量不属于命名空间std，它 <strong>由预处理器负责管理</strong> ，因此我们可以直接使用预处理器变量而无需在前面加上std::。 <strong>预处理器是运行于编译之前的一段程序。</strong></li>
+<li><strong>当使用到一个预处理变量时，在编译之前，预处理器会自动地将程序里全部的同名预处理变量替换成实际值。</strong></li>
+<li>C++11之后，现在的C++程序最好使用 nullptr ，尽量避免使用NULL。</li>
+<li>所以不论是作为条件出现还是参与比较运算，都应该使用合法指针， <strong>使用非法指针作为条件或进行比较都是未定义的。</strong></li>
+<li><strong>void * 是一种特殊的指针类型，可用于存放任意对象的地址。</strong></li>
+<li>不能直接操作 void* 指针所指向的对象，因为不知道它指向什么类型的指针。只能用于拿它和别的指针比较、作为函数的输入或输出，或者赋值给另外一个 void* 指针。
+##2.3.3 理解复合类型的使用</li>
+<li>类型修饰符只是声明符的一部分。</li>
+<li>通过 * 的个数可以区分指针的级别。</li>
+<li><strong>如果要判断复合类型的类型：从右向左阅读该声明语句，离标识符最近的且优先级最高的类型修饰符，就是它的复合类型。至于是指向什么类型，可通过声明符剩下的部分来判断。</strong></li>
+</ol>
+<hr>
+<h1 id="24--const-限定符">2.4  const 限定符</h1>
+<ol>
+<li>通过使用修饰符 <strong>const</strong>  ，可以创建一个常量。</li>
+<li><strong>由于 const 对象创建之后就不能再修改，所以 const 对象必须初始化。</strong></li>
+<li>编译器将 <strong>在编译过程中</strong> 把所有用到 const 对象的地方 <strong>替换</strong> 成初始化的值。而<strong>预处理器</strong>是在 <strong>编译前替换</strong> 。</li>
+<li><strong>如果程序包含多个文件，则每个用了 const 常量的文件都必须得能访问到它的初始值才行，只有这样，编译器才能执行对 const 常量的替换。这要求在每一个用到 const 常量的文件中都有对它的定义。</strong></li>
+<li>**默认情况下，const 常量被设定为仅在本文件内有效。**当多个文件中出现同名的 const 常量时，其实相当于在不同文件中分别定义了独立的 const 常量。这样避免了对同一 const 常量的定义。</li>
+<li><strong>通过对 const 常量的声明和定义都使用 extern 关键字，可以做到只在一个文件中定义 const 常量，然后在其它多个文件中声明并使用它。</strong></li>
+<li><strong>最好在源文件中定义 extern const 常量，在头文件中声明该 extern const 常量。这样可以避免多个头文件包含该头文件进而导致的重定义。</strong></li>
+</ol>
+<h2 id="241-const-的引用">2.4.1 const 的引用</h2>
+<ol>
+<li>可以把引用绑定到 const 常量上，这被称为 <strong>对常量的引用（reference to const）</strong> 。 <strong>不能</strong> 通过对 const 的引用来改变其绑定的 const 常量的值。</li>
+<li>并不存在“常量引用”，这只是个 <strong>简称</strong> 。实际上只有 <strong>对 const 的引用</strong> 。 <strong>因为引用不是一个对象，没法确保其永远不变，所以它也就没有顶层 const 。</strong></li>
+<li>作为引用的类型匹配的两个例外之一： <strong>在初始化 const 常量引用时，允许任意表达式作为其初始值</strong> 。只要它能转换成引用的类型即可。尤其， <strong>允许为一个对 const 的引用绑定非常量的对象、字面值，甚至是个一般表达式。</strong></li>
+<li>编译器是如何实现这种特殊情况的：
+<blockquote>
+<pre><code>double dval = 3.14;
+const int &amp;val = dval;
+</code></pre><p>编译器为了确保 val 绑定的是一个整型常量，它将上述代码变成下面这样。</p>
+<pre><code>double dval = 3.14;
+const int temp = dval;
+const int &amp;val = temp;
+</code></pre><p>这样做使得 val 绑定了一个 <strong>临时量（temporary）对象</strong> 。所谓临时量对象就是 <strong>当编译器需要一个空间来暂时存储表达式的求值结果时，临时创建的一个未命名的对象。</strong></p>
+</blockquote>
+</li>
+<li><strong>对 const 常量的引用只是对该引用可参与的操作做出了限定，对于引用的对象本身是不是一个常量未作限定。</strong> 也就意味着， <strong>如果引用的对象本身不是一个常量，则可以通过其它途径来改变它的值。</strong></li>
+</ol>
+<h2 id="242-指针和-const">2.4.2 指针和 const</h2>
+<ol>
+<li><strong>指向常量的指针（pointer to const）：</strong> 不能通过指向 const 的指针来改变其所指对象的值。比如 <code>const int* a = 2;</code> 。</li>
+<li><strong>向 const 的指针只是对该指针可参与的操作做出了限定，对于它指向的对象本身是不是一个常量未作限定。</strong> 也就意味着， <strong>如果指向的对象本身不是一个常量，则可以通过其它途径来改变它的值。</strong></li>
+<li>编译器是通过与上文一样的方法——临时量，通过让指针指向该临时量，从而实现这种特殊情况。</li>
+<li><strong>常量指针（const pointer）：</strong> 将指针本身声明为常量。</li>
+<li>由于 const 指针是常量，所以 <strong>const 指针必须初始化</strong> 。</li>
+<li>当指针为常量指针时，是不能修改其指向的对象，但是可以通过它修改指向对象的值。</li>
+</ol>
+<h2 id="243-顶层-const-与底层-const">2.4.3 顶层 const 与底层 const</h2>
+<ol>
+<li><strong>顶层 const （top-level const）：</strong> 表示指针本身是一个常量。</li>
+<li><strong>底层 const （low-level const）：</strong> 表示指针指向的对象本身是一个常量——该对象不一定是常量，只是说无法通过该指针对其值进行修改。</li>
+<li><strong>顶层 const 可以表示任意的对象是常量，这对于任意数据类型都适用</strong> ，比如算术类型、类、指针等，至于引用，引用只是别名，没有实体，又怎么能有 top-level const 呢。 <strong>但底层 const 则与指针和引用等复合类型的基本数据类型部分相关。</strong></li>
+<li><strong>我的理解：对于 const 常量的引用和指向 const 常量的指针都是 low-level const （底层 const）。</strong></li>
+</ol>
+<h2 id="244-constexpr-和常量表达式">2.4.4 constexpr 和常量表达式</h2>
+<ol>
+<li><strong>常量表达式（const expression）：</strong> 是指值不会改变并且在编译过程中就能得到计算结果的表达式。</li>
+<li><strong>一个对象或表达式是不是常量表达式由它的数据类型和初始值共同决定。</strong></li>
+<li>C++11规定，允许将变量声明为 <strong>constexpr 类型</strong> 以便 <strong>由编译器来验证变量的值是否是一个常量表达式</strong> 。因为 <strong>声明为 constexpr 类型的对象必须要常量表达式初始化</strong> 。const 常量是可以用函数的返回值初始化的，而函数的返回值在编译过程中未知，在运行时才知道，所以这种不是常量表达式。</li>
+<li><strong>不能用普通函数作为 constexpr 常量的初始值，但是可以使用C++11中的一种新函数—— constexpr 函数。这种函数一定要足够简单以至于在编译时就计算出其结果，这样就可以用 constexpr 函数来初始化 constexpr 常量。</strong></li>
+<li><strong>字面值类型（literal type）：</strong> 比较简单地， <strong>值可以在编译时得到的类型</strong> 。比如算术类型、引用、指针都属于字面值类型。而程序员的自定义类、IO库、string 类型则不属于。</li>
+<li>尽管指针和引用都可以定义成 constexpr ，但它们的初始值却有严格限制。 <strong>一个 constexpr 的指针和初始值必须是 nullptr 或者 0 ，或者是储存于某个固定地址的对象。</strong></li>
+<li>与 const 不同的是， <strong>constexpr 对于指针没有 low 和 top 之分，只对指针起修饰作用——将指针声明为常量指针</strong> ，与指针所指对象无关。</li>
+</ol>
+<pre><code>constexpr int *q = nullptr;   //这是一个指向 int 类型的常量指针。
+</code></pre><ol start="8">
+<li><strong>与其它 const 指针相似的是，constexpr 指针既可以指向常量也可以指向非常量。</strong> 处理方式与它们相同。</li>
+</ol>
+<hr>
+<p>#2.5  处理类型</p>
+<p>##2.5.1 类型别名</p>
+<ol>
+<li><strong>类型别名（type alias）：</strong> 是一个名字，它是某种类型的别名。使得复杂类型名字变得简单，使用更方便，提升代码的可读性。</li>
+<li>C++有两种方法用于定义类型别名：使用 <strong>关键字 typedef</strong> 和 使用C++11中新增的 <strong>别名声明（alias declaration）</strong> 来定义类型别名。</li>
+<li>其中的 typedef 是作为声明语句中基本数据类型的一部分出现。使用了 typedef 定义的就不是变量了，而是类型别名。要注意的是，可以在声明符中使用类型修饰，从而定义出复合类型的类型别名。</li>
+</ol>
+<pre><code>typedef double wave;        //wave 是 double 的别名
+typedef wave base, *p ;     //base 是 double 的别名，p 是 double* 的别名
+</code></pre><ol start="4">
+<li>C++11新增的 <strong>别名声明</strong> 是通过 <strong>使用关键字 using 作为别名声明的开头，其后紧跟别名和等号，最后则是数据类型</strong> 。比如<code>using UI = int</code>，定义了一个 int 的类型别名 UI 。</li>
+</ol>
+<pre><code>using int_array4 = int[4];
+等价于
+typedef int int_array4 [4];
+</code></pre><ol start="5">
+<li><strong>如果某个类型别名指代的是复合类型或常量</strong> ，那么把它用到声明语句里会产生预料以外的结果。比如：</li>
+</ol>
+<pre><code>typedef char * pstring; 
+</code></pre><p>其中 pstring 是 char* 的类型别名。指代一个复合类型——指向 char 的指针。</p>
+<pre><code>const pstring cstr = nullptr;      //这里的 cstr 是指向一个 char 变量的常量指针
+//两个定义并不等价
+const char *cstr;            //这里的 cstr 是指向一个 char 常量的指针
+</code></pre><p>遇到一条使用类型别名声明的语句，<del>直接将类型别名替换成它指代的复合类型来理解</del>，这种 <strong>理解是错误的</strong> 。
+<strong>由于 const 在类型左侧，所以这里的 const 限定的是基本数据类型为常量。</strong>
+因为第一条声明语句中的 pstring 是基本数据类型，所以其指代的 char * 在这里作为基本数据类型, <strong>此处 * 不是声明符的一部分 ，所以 const 限定的是 char * 为常量</strong> ——也就是指向一个 char 变量的 const 指针。
+而 <strong>第二条声明语句的 * 是声明符的一部分， const 限定的是 char 为常量</strong> ——也就是指向一个 char 常量的指针。</p>
+<h2 id="252-auto-类型说明符">2.5.2 auto 类型说明符</h2>
+<ol>
+<li><strong>C++11新增 auto 类型说明符——用于让编译器通过初始值来推算变量的类型。</strong></li>
+<li>由于 auto 需要知道初始值，所以 <strong>auto 定义的变量必须初始化</strong> 。</li>
+<li>使用 auto 也能在一条语句中声明多个变量，但是因为一条声明语句只能用一个基本数据类型， <strong>所以 auto 在一条语句中定义的多个变量必须是同类型，所以它们的初始值必须是同类型</strong> 。</li>
+<li><strong>编译器推断出来的 auto 类型和初始值的类型不一定完全一样</strong> ，编译器会适当改变结果类型使其更符合初始化规则。</li>
+<li>使用引用其实是在使用它引用的对象，特别是使用它作为变量的初始值时， <strong>真正参与初始化的其实是引用对象的值，此时编译器以引用对象的类型作为 auto 的类型</strong> 。</li>
+<li><strong>auto 一般会忽略掉初始值的顶层 const ，同时底层 const 会保留。</strong> ——这意味着使用 const 常量给 auto 变量初始化时，auto 并不会自动将变量声明为 const 常量。如果使用指向 const 常量的指针对 auto 变量初始化，则该 auto 变量会被声明为指向 const 常量的指针。</li>
+</ol>
+<pre><code>int i =10, &amp;r = i;
+const int ci = i, &amp;cr = ci;
+auto a = ci;      //a 是一个 int 类型的变量，auto 忽略掉了 ci 的顶层 const 
+auto b = cr;      //b 是一个 int 类型的变量，auto 忽略掉了 ci 的顶层 cosnt
+auto c = &amp;i;      //c 是一个指向 int 类型的指针（ i 的地址就是指向 int 的指针）
+auto d = &amp;ci;     //d 是一个指向 const int 的指针（因为 ci 是 const int 类型的常量，它的地址相当于指向 const int 的指针），保留了底层 const 
+</code></pre><ol start="7">
+<li><strong>如果希望定义一个常量的 auto 对象，也就是顶层 const ，需要显式地指出：</strong></li>
+</ol>
+<pre><code>const auto int app = 2;
+</code></pre><ol start="8">
+<li><strong>但是如果将引用的类型声明为 auto ，此时的初始化规则仍然适用。</strong></li>
+</ol>
+<pre><code>const int a = 233;
+auto &amp;a = ci;        //正确，a是一个整型常量引用（因为对 const 的引用相当于底层 const ）
+auto &amp;b = 233;       //错误，233是一个 int 类型的字面值，不是一个 const int 
+const auto &amp;c = 233; //正确：可以为对常量引用绑定字面值。
+</code></pre><p>为什么第一条语句成立，而第二条就不成立呢？那是因为233的类型虽然是 int 类型，但是它是个字面值（常量），而 b 被 auto 定义为对 int 的引用，所以不匹配，应该改为第三条语句。
+而第一条语句中 ci 是 const int 类型的常量，而且 <strong>对于 const int 类型的引用是 low-level const （底层 const）</strong> ，所以保留。</p>
+<h2 id="253-decltype-类型说明符">2.5.3 decltype 类型说明符</h2>
+<ol>
+<li><strong>C++11 新增第二种类型说明符 decltype ，它的作用是选择并返回操作数的数据类型。</strong> 一般用于希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量。再次</li>
+<li><code>decltype (表达式)</code> ：编译器通过分析表达式并得到它的类型，却 <strong>不实际计算表达式的值</strong>。</li>
+<li>decltype 处理 top-level const （顶层 const ）和引用的方式与 auto 有些不同。 <strong>如果 decltype 使用的表达式是一个变量，则 decltype 返回该变量的类型（包括顶层 const 和引用在内）。</strong> 这与 auto 是不一样的。</li>
+<li><strong>decltype 返回的数据类型的规则如下：</strong>
+<blockquote>
+<p>有 decltype(表达式)</p>
+<p>①表达式是 <strong>标识符、类访问表达式</strong> ，decltype 返回的类型 <strong>和表达式的类型一致</strong>
+②表达式是 <strong>函数调用</strong> ，decltype 返回的类型 <strong>和函数返回值的类型一致</strong>
+③表达式是 <strong>解引用操作</strong> ，则 decltype 返回的是 <strong>对表达式类型的引用</strong> ， <strong>否则和表达式类型一致</strong> 。
+④表达式是 <strong>算术运算表达式</strong> ，则 decltype 返回的类型 <strong>和表达式结果的类型一致</strong> 。比如 <code>1 + 2</code> 、<code>1 + ass</code> 等。
+⑤表达式是 <strong>赋值表达式</strong> ，则 decltype 返回的是 <strong>对表达式结果类型的引用</strong>。比如 <code>i += 1</code> 、<code>i = 2</code> 等。</p>
+</blockquote>
+</li>
+<li><strong>如果给 decltype(变量) 中的变量加上多个小括号()，decltype 都一定会返回关于对该对象类型的引用。因为变量是一种可以作为赋值语句左值的特殊表达式。</strong> 比如<code>decltype ((i)) d = i;</code>。</li>
+</ol>
+<hr>
+<h1 id="26--自定义数据结构">2.6  自定义数据结构</h1>
+<ol>
+<li>从最基本的层面理解，数据结构是把一组相关的数据元素组织起来然后使用它们的函数方法。</li>
+<li>类的其中一种的定义 <strong>格式</strong> （ <strong>struct</strong>  + 类名 + 类体）如下：</li>
+</ol>
+<pre><code>struct name {
+  结构成员
+}；
+</code></pre><p>其中类体 <strong>包括且由花括号围成</strong> ，类体是 <strong>可以省略</strong> 的。
+3. <strong>可以在类体后紧跟变量名以定义该结构类型的新变量。</strong></p>
+<pre><code>struct name {
+  结构成员
+} accum, trans, *salesptr；
+</code></pre><ol start="4">
+<li><strong>类体里定义了类的成员，其中的数据成员（data member）定义了每一个类对象的具体内容。</strong> 不同的类对象，哪怕同类型，它们的数据成员是独立的。</li>
+<li><strong>C++11规定，可以为数据成员提供一个类内初始值（in-class initializer）。创建新对象时，类内初始值将被用于初始化数据成员。而没有类内初始值的数据成员，将执行默认初始化。</strong><br>
+<strong>对于类内初始值的限制：①使用等号②等号+花括号③只使用花括号④不能使用圆括号()</strong></li>
+</ol>
+<pre><code>struct Sales_date {
+  std::string bookNo;
+  int a = 0;
+  double dd {0.0};
+  float ff={0.0f};
+}；
+</code></pre><ol start="6">
+<li>除了 struct 以外，还可以使用 <strong>关键字 class</strong> 来定义类。</li>
+<li><strong>如果要在不同的文件中使用同一个类，类的定义就必须保持一致。而要保持类的定义一致，通常是将类定义在头文件中。而且类的名字应该与其所在头文件名一样。</strong></li>
+<li><strong>预处理器（preprocessor）：</strong>  <strong>在编译之前执行的一段程序</strong> ，可以部分改变程序员所写的程序。比如 <code>#include</code> 和 <code>#define</code> 。 <strong>同时还可以确保头文件多次包含仍能安全运行的常用技术。</strong></li>
+<li>C++还会使用一项预处理功能—— <strong>头文件保护符（header guard）</strong> ， <strong>头文件保护符依赖于预处理变量</strong> 。 <strong>预处理变量有两种形态：已定义和未定义。</strong></li>
+<li><code>#ifdef</code> 和 <code>#ifndef</code> ： <strong>预处理指令，分别检查某个指定的预处理变量是否已经定义。</strong> ： <code>#ifdef</code> 当且仅当 <strong>变量已定义时为真</strong> , <code>#ifndef</code> 当且仅当 <strong>变量未定义时为真</strong> 。一旦检查结果为 <strong>真，则执行后续操作直到遇到 <code>#endif</code> 为止。</strong></li>
+</ol>
+<pre><code>#ifndef SALES_DATE_H
+#define SALES_DATE_H
+#include &lt;string&gt;
+
+struct Sales_date {
+  std::string bookNo;
+  int a = 0;
+  float ff={0.0f};
+}；
+
+#endif
+</code></pre><p>第一次包含头文件 Sales_date.h 时，先插入头文件内的代码，然后检查 <code>#ifndef</code> 指令，为真则按顺序执行后续代码直到遇到 <code>endif</code> 。
+11. <strong>预处理器无视C++中关于作用域的规则。</strong>
+12. 一般将预处理变量的名字全部大写。
+13. 这个程序的预处理变量包括头文件保护符应该是唯一的。</p>
+
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'>
+  </div>
+</footer>
+
+
+</article>
+
+<nav class='entry-nav'>
+  <div class='container'><div class='prev-entry sep-before'>
+      <a href='/c&#43;&#43;/primer_1/'>
+        <span aria-hidden='true'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="20" y1="12" x2="4" y2="12"/>
+  <polyline points="10 18 4 12 10 6"/>
+  
+</svg>
+ Previous</span>
+        <span class='screen-reader-text'>Previous post: </span>第一章 又是开始</a>
+    </div><div class='next-entry sep-before'>
+      <a href='/c&#43;&#43;/primer_3/'>
+        <span class='screen-reader-text'>Next post: </span>第三章 字符串、向量和数组<span aria-hidden='true'>Next <svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="4" y1="12" x2="20" y2="12"/>
+  <polyline points="14 6 20 12 14 18"/>
+  
+</svg>
+</span>
+      </a>
+    </div></div>
+</nav>
+
+
+
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='https://github.com/NeutralAngler' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://facebook.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Facebook account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/%e7%a0%8d%e6%9f%b4%e7%9a%84%e8%8c%b6%e8%a8%80' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='mailto:contact@example.com' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://codepen.io/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Codepen account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+  <line x1="12" y1="22" x2="12" y2="15.5"/>
+  <polyline points="22 8.5 12 15.5 2 8.5"/>
+  <polyline points="2 15.5 12 8.5 22 15.5"/>
+  <line x1="12" y1="2" x2="12" y2="8.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/muniftanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://t.me/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Telegram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="m 22.05,1.577 c -0.393,-0.016 -0.784,0.08 -1.117,0.235 -0.484,0.186 -4.92,1.902 -9.41,3.64 C 9.263,6.325 7.005,7.198 5.267,7.867 3.53,8.537 2.222,9.035 2.153,9.059 c -0.46,0.16 -1.082,0.362 -1.61,0.984 -0.79581202,1.058365 0.21077405,1.964825 1.004,2.499 1.76,0.564 3.58,1.102 5.087,1.608 0.556,1.96 1.09,3.927 1.618,5.89 0.174,0.394 0.553,0.54 0.944,0.544 l -0.002,0.02 c 0,0 0.307,0.03 0.606,-0.042 0.3,-0.07 0.677,-0.244 1.02,-0.565 0.377,-0.354 1.4,-1.36 1.98,-1.928 l 4.37,3.226 0.035,0.02 c 0,0 0.484,0.34 1.192,0.388 0.354,0.024 0.82,-0.044 1.22,-0.337 0.403,-0.294 0.67,-0.767 0.795,-1.307 0.374,-1.63 2.853,-13.427 3.276,-15.38 L 23.676,4.725 C 23.972,3.625 23.863,2.617 23.18,2.02 22.838,1.723 22.444,1.593 22.05,1.576 Z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://scholar.google.com/citations?user=qc6CJjYAAAAJ' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Google_scholar account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M21.328 2.002v9.2M8.695 7.85c.014-.787-.11-2.236.28-2.89.623-1.045.856-1.39 1.797-1.989 1.953-.988 4.296.692 4.296.692.803.564 1.672 2.1 1.672 2.1l1.368-1.824-5.444-1.754-3.515 1.34L6.08 7.681m9.109 3.42s.65-.633 1.168-1.085c.461-.402.516-.714.6-.914.18-.426.268-.909.268-1.446 0-.7-.131-1.274-.388-1.735-.031-.053 0 0-.097-.157l4.588-3.762H10.32L3.672 7.85l5.023-.024c.23 1.237.619 1.575 1.019 2.222.744.719 1.13 1.194 2.215 1.194.254 0 2.6-.057 2.842-.09 0 0 .546 1.199-.133 1.71-.41.31.576 1.304.576 1.304s-5.577.831-6.523 1.427a4.13 4.13 0 0 0-1.306 1.277 3.034 3.034 0 0 0-.493 1.665c0 .502.106.955.32 1.357.214.403.493.733.84.99.345.258.744.473 1.194.649.45.174.896.297 1.342.367a8.348 8.348 0 0 0 3.41-.166 7.754 7.754 0 0 0 1.964-.807 4.28 4.28 0 0 0 1.49-1.443c.38-.609.57-1.292.57-2.049 0-.574-.116-1.096-.347-1.57a3.755 3.755 0 0 0-.847-1.164c-.335-.302-2.19-1.837-2.19-1.837"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCT-U0rNerYxItGcuoPX-WYA' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section><div class='copyright'>
+  <p> &copy; 2020 NeutralAngler </p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.c3bcf2df.js'></script><script src='/js/custom.js'></script>
+
+</body>
+
+</html>
+

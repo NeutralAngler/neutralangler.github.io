@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='3.0 前言  内置类型是直接由C&#43;&#43;直接定义的，而标准库定义了另外一组更高级性质的类型，它们尚未被实现到计算机硬件中。 string 和 vector ：string 表示可变长的字符串，vector 存放的是某种类型对象的可变长序列。   3.1 命名空间的 using 声明  除了使用 namespace::成员 的形式以外，还可以通过 using 指令来指定命名空间甚至是命名空间中的具体成员 。格式分别如下：  using namespace::name; //这是指定命名空间内的具体成员 using namespace; //这是只指定命名空间 使用 using 声明后，就无需使用前缀 namespace:: 即可使用。 头文件不应该包含 using 声明 。由于包含多个头文件，如果使用 using 声明可能会导致相同标识符的冲突。   3.2 标准库类型 string  标准库类型 string 表示可变长的字符串，使用 string 类型必须使用 头文件 string 。 作为标准库的一部分，string 类型定义在命名空间 std 中。  3.2.1 定义和初始化 string 对象  如何初始化类的对象是由类本身决定的。一个类可以定义多个初始化对象的方式，只是这些方式之间要有区别。 几种初始化 string 对象的方式：  string s1; //默认初始化，s1 是个空字符串 string s2{ &quot;ss&quot; }; //s2 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s3(s1); //s3 是 s1 的副本 string s4 = s1; //s4 是 s1 的副本 string s5(&quot;ss&quot;); //s5 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s6 = &quot;ss&quot;; //s6 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s7 = (&quot;ss&quot;); //s7 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s8 = { &quot;ss&quot; }; //s8 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s9 (n, &#39;c&#39;); //使用 n 个连续的 &#39;c&#39; 字符组成的字符串初始化 s9 使用等号（=）初始化一个对象，实际上执行的是 拷贝初始化（copy initialization） ，直接将等号右侧对象的值拷贝到左侧对象中。不使用等号（=），则执行 直接初始化（direct initialization） 。 当初始值只有一个时，通常使用拷贝初始化。 当初始值像上面代码中的 (n,&lsquo;c&rsquo;) 一样，具有多个值，一般只能使用直接初始化。 但也可以使用拷贝初始化，只是要显式地创建一个对象用于拷贝。 比如：  string a = string(10, &#39;s&#39;); 其本质等价于：'>
+<meta name='theme-color' content='#ffcd00'>
+
+<meta property='og:title' content='第三章 字符串、向量和数组 • NeutralAngler'>
+<meta property='og:description' content='3.0 前言  内置类型是直接由C&#43;&#43;直接定义的，而标准库定义了另外一组更高级性质的类型，它们尚未被实现到计算机硬件中。 string 和 vector ：string 表示可变长的字符串，vector 存放的是某种类型对象的可变长序列。   3.1 命名空间的 using 声明  除了使用 namespace::成员 的形式以外，还可以通过 using 指令来指定命名空间甚至是命名空间中的具体成员 。格式分别如下：  using namespace::name; //这是指定命名空间内的具体成员 using namespace; //这是只指定命名空间 使用 using 声明后，就无需使用前缀 namespace:: 即可使用。 头文件不应该包含 using 声明 。由于包含多个头文件，如果使用 using 声明可能会导致相同标识符的冲突。   3.2 标准库类型 string  标准库类型 string 表示可变长的字符串，使用 string 类型必须使用 头文件 string 。 作为标准库的一部分，string 类型定义在命名空间 std 中。  3.2.1 定义和初始化 string 对象  如何初始化类的对象是由类本身决定的。一个类可以定义多个初始化对象的方式，只是这些方式之间要有区别。 几种初始化 string 对象的方式：  string s1; //默认初始化，s1 是个空字符串 string s2{ &quot;ss&quot; }; //s2 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s3(s1); //s3 是 s1 的副本 string s4 = s1; //s4 是 s1 的副本 string s5(&quot;ss&quot;); //s5 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s6 = &quot;ss&quot;; //s6 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s7 = (&quot;ss&quot;); //s7 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s8 = { &quot;ss&quot; }; //s8 是字面值 &quot;ss&quot; 除了最后的空字以外的副本 string s9 (n, &#39;c&#39;); //使用 n 个连续的 &#39;c&#39; 字符组成的字符串初始化 s9 使用等号（=）初始化一个对象，实际上执行的是 拷贝初始化（copy initialization） ，直接将等号右侧对象的值拷贝到左侧对象中。不使用等号（=），则执行 直接初始化（direct initialization） 。 当初始值只有一个时，通常使用拷贝初始化。 当初始值像上面代码中的 (n,&lsquo;c&rsquo;) 一样，具有多个值，一般只能使用直接初始化。 但也可以使用拷贝初始化，只是要显式地创建一个对象用于拷贝。 比如：  string a = string(10, &#39;s&#39;); 其本质等价于：'>
+<meta property='og:url' content='https://neutralangler.github.io/c&#43;&#43;/primer_3/'>
+<meta property='og:site_name' content='NeutralAngler'>
+<meta property='og:type' content='article'><meta property='article:section' content='C&#43;&#43;'><meta property='article:published_time' content='2020-04-11T21:48:17&#43;08:00'/><meta property='article:modified_time' content='2020-04-11T21:48:17&#43;08:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.68.3" />
+
+  <title>第三章 字符串、向量和数组 • NeutralAngler</title>
+  <link rel='canonical' href='https://neutralangler.github.io/c&#43;&#43;/primer_3/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.ab98e12b.css'><link rel='stylesheet' href='/css/custom.css'><style>
+:root{--color-accent:#ffcd00;}
+</style>
+
+  
+
+</head>
+<body class='page type-C&#43;&#43; has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.png'>
+      </a>
+    </div>
+    
+    <h2 class='title site-title '>
+      <a href='/'>
+      NeutralAngler
+      </a>
+    </h2>
+    <div class='desc'>
+    技术爱好者/游戏开发者/懒癌患者/平凡人
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-search sep-after'>
+  <header>
+    <h4 class='title widget-title'>Search</h4>
+  </header>
+
+  <form action='/search' id='search-form' class='search-form'>
+    <label>
+      <span class='screen-reader-text'>Search</span>
+      <input id='search-term' class='search-term' type='search' name='q' placeholder='Search&hellip;'>
+    </label></form>
+
+</section>
+<section class='widget widget-taxonomy_cloud sep-after'>
+  <header>
+    <h4 class='title widget-title'>Tags</h4>
+  </header>
+
+  <div class='container list-container'>
+  <ul class='list taxonomy-cloud'><span>Not a single Tag!</span></ul>
+</div>
+
+
+</section>
+</div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul><li class='item'>
+        <a href='https://github.com/MunifTanjim/minimo'>Repo</a>
+      </li></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'>
+    
+    <style>.widget-breadcrumbs li:after{content:'\2f '}</style>
+  <section class='widget widget-breadcrumbs sep-after'>
+    <nav id='breadcrumbs'>
+      <ol><li><a href='/'>NeutralAngler</a></li><li><a href='/c&#43;&#43;/'>C&#43;&#43;s</a></li><li><span>第三章 字符串、向量和数组</span></li></ol>
+    </nav>
+  </section></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>NeutralAngler</p><p class='desc site-desc'>技术爱好者/游戏开发者/懒癌患者/平凡人</p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>第三章 字符串、向量和数组</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2020-04-11T21:48:17&#43;08:00'>2020, Apr 11</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+9 mins read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <h1 id="30-前言">3.0 前言</h1>
+<ol>
+<li>内置类型是直接由C++直接定义的，而标准库定义了另外一组更高级性质的类型，它们尚未被实现到计算机硬件中。</li>
+<li>string 和 vector ：string 表示可变长的字符串，vector 存放的是某种类型对象的可变长序列。</li>
+</ol>
+<hr>
+<h1 id="31-命名空间的-using-声明">3.1 命名空间的 using 声明</h1>
+<ol>
+<li>除了使用 <code>namespace::成员</code> 的形式以外，还可以通过 <strong>using 指令来指定命名空间甚至是命名空间中的具体成员</strong> 。格式分别如下：</li>
+</ol>
+<pre><code>using namespace::name;  //这是指定命名空间内的具体成员
+using namespace;        //这是只指定命名空间
+</code></pre><ol start="2">
+<li>使用 using 声明后，就无需使用前缀 <code>namespace::</code> 即可使用。</li>
+<li><strong>头文件不应该包含 using 声明</strong> 。由于包含多个头文件，如果使用 using 声明可能会导致相同标识符的冲突。</li>
+</ol>
+<hr>
+<h1 id="32-标准库类型-string">3.2 标准库类型 string</h1>
+<ol>
+<li>标准库类型 string 表示可变长的字符串，使用 string 类型必须使用 <strong>头文件 string</strong> 。</li>
+<li>作为标准库的一部分，string 类型定义在命名空间 std 中。</li>
+</ol>
+<h2 id="321-定义和初始化-string-对象">3.2.1 定义和初始化 string 对象</h2>
+<ol>
+<li><strong>如何初始化类的对象是由类本身决定的。一个类可以定义多个初始化对象的方式，只是这些方式之间要有区别。</strong></li>
+<li>几种初始化 string 对象的方式：</li>
+</ol>
+<pre><code>string s1;            //默认初始化，s1 是个空字符串
+string s2{ &quot;ss&quot; };    //s2 是字面值 &quot;ss&quot; 除了最后的空字以外的副本
+string s3(s1);        //s3 是 s1 的副本
+string s4 = s1;       //s4 是 s1 的副本
+string s5(&quot;ss&quot;);      //s5 是字面值 &quot;ss&quot; 除了最后的空字以外的副本
+string s6 = &quot;ss&quot;;     //s6 是字面值 &quot;ss&quot; 除了最后的空字以外的副本
+string s7 = (&quot;ss&quot;);   //s7 是字面值 &quot;ss&quot; 除了最后的空字以外的副本
+string s8 = { &quot;ss&quot; }; //s8 是字面值 &quot;ss&quot; 除了最后的空字以外的副本
+string s9 (n, 'c');   //使用 n 个连续的 'c' 字符组成的字符串初始化 s9 
+</code></pre><ol start="3">
+<li>使用等号（=）初始化一个对象，实际上执行的是 <strong>拷贝初始化（copy initialization）</strong> ，直接将等号右侧对象的值拷贝到左侧对象中。不使用等号（=），则执行 <strong>直接初始化（direct initialization）</strong> 。</li>
+<li><strong>当初始值只有一个时，通常使用拷贝初始化。</strong></li>
+<li><strong>当初始值像上面代码中的 (n,&lsquo;c&rsquo;) 一样，具有多个值，一般只能使用直接初始化。</strong>  <strong>但也可以使用拷贝初始化，只是要显式地创建一个对象用于拷贝。</strong> 比如：</li>
+</ol>
+<pre><code>string a = string(10, 's');
+</code></pre><p>其本质等价于：</p>
+<pre><code>string temp (10,'c');
+string a = temp;
+</code></pre><h2 id="322-string-对象上的操作">3.2.2 string 对象上的操作</h2>
+<ol>
+<li><strong>一个类除了要规定初始化其对象的方式外，还要定义对象上所能执行的操作。其中，类既能定义函数方法，也能定义 &laquo; 、 + 等各种运算符在该类对象上的新含义。</strong></li>
+<li>string的部分操作：</li>
+</ol>
+<pre><code>os &lt;&lt; s         //将 s 写到输入流 os 中，并返回 os
+is &gt;&gt; s         // 将 is 输入流中读取一个字符串赋值给 string 对象 s ，该字符串在第一、二处空白之间，最后返回 is
+getline(is, s)  // 从 is 中读取一行字符串赋值给 s ，字符串以换行符为结尾
+s.empty()       // s 为空字符串返回 true ，否则返回 false 
+s.size()        // 返回 string 对象内的字符个数
+s[n]            // 返回 s 中第 n+1 个字符的引用，n 从0开始
+s1+s2           // 两个 string 对象相连，返回一个更长的 string 
+s1=s2           // 拷贝 s2 的值，然后赋值给 s1
+s1==s2          // 判断两 string 对象是否完全相同。完全相同:长度相等，字符相同
+s1!=s2          // 判断两 string 对象是否不相同
+&lt;,&lt;=,&gt;,&gt;=       // ①首先判断，谁长就谁大 ②如果一样长，按字典alphabet顺序排序
+</code></pre><ol start="3">
+<li><strong>空白</strong> ：即空格、制表符、换行符等。</li>
+<li><strong>可以使用 IO 运算符来读写 string 对象。在执行读取操作（cin &raquo; ）时，string 对象会自动忽略输入流开头的空白，并从第一个真正的字符开始读取，直到遇到下一处空白。</strong></li>
+<li>与内置类型的输入输出一样， <strong>string 对象的 IO 操作也是返回（&raquo;、&laquo;）运算符左侧的运算对象为表达式结果，所以可以将多个 string 对象连接在一起。</strong> 如：</li>
+</ol>
+<pre><code>string a,b,c;
+cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+cout &lt;&lt; a &lt;&lt; b &lt;&lt; c;
+</code></pre><ol start="6">
+<li>使用 <strong>getline</strong> 函数代替原来的 &raquo; 运算符，可以将带有大部分空白符（不包括换行符）的字符串赋值给 string 对象。 getline 函数的参数是一个标准输入流（ istream 对象）和一个 string 对象。 getline 将从输入流中读取字符， <strong>当遇到换行符就结束读取操作，将没有换行符的字符串赋值给 string 对象，哪怕输入流开头就是换行符（赋值一个空字符串给 string 对象）</strong> 。而 <strong>getline 函数的返回值</strong> 与 istream 对象的输入操作一样， <strong>也是输入流对象（ istream 对象）</strong> 。</li>
+<li><strong>getline 函数会丢弃它在输入流中检测到的换行符</strong></li>
+<li><strong>string 对象的成员函数 empty 根据 string 对象是否为空返回对应的布尔值。</strong> 空返回 true ，非空返回 false 。 string 对象使用点运算符（.）就可以调用，比如： <code>s.empty()</code> 。</li>
+<li><strong>string 对象的成员函数 size 返回 string 对象中字符的总个数。</strong></li>
+<li><strong>而 size 成员函数返回值的类型是类 string 里定义的 size_type 类型。</strong>  <strong>在标准库里，它是一个无符号类型（unsigned），而且大小足够放下任何 string 对象的字符总个数。</strong></li>
+<li>string 类定义了几种用于比较字符串的运算符。这些运算符将逐一比较 string 对象中的字符，并且对大小敏感。</li>
+<li>== 和 != 分别检验两个 string 对象相等或不相等，从字符的总个数和按相同顺序上的字符是否相同。</li>
+<li><strong>&lt;=、&gt;=、&gt; 和 &lt; 都按照字典顺序的规则：</strong>
+<blockquote>
+<ol>
+<li><strong>如果两个 string 对象的长度不同，而且两个 string 对象相同位置上的字符相同，则较短的 string 对象小于较长 string 对象。</strong></li>
+<li><strong>如果两个 string 对象在某些位置上不同，则 string 对象比较的结果其实就是 string 对象中第一对不同字符比较的结果（字符比较是指编码值的比较）。</strong></li>
+</ol>
+</blockquote>
+</li>
+<li>对 string 对象而言， <strong>允许把一个 string 对象的值赋值给另一个 string 对象。</strong> 比如 <code> s1 = s2 ;</code> 。</li>
+<li><strong>两个 string 对象相加得到一个新的 string 对象，而结果一个新 string 对象，内容是两个 string 对象内字符按顺序相连的字符串。</strong></li>
+<li><strong>标准库允许把字符串字面值和字符字面值转换成 string 对象。当把 string 对象和字符字面值以及字符串字面值混在同一天语句中使用时，必须保证（+）的两个运算对象至少有一个是 string 对象。</strong></li>
+<li>注意：<strong>C++中的字符串字面值的类型不是 string 类型，是最后一个元素为空字符的 low-level const 字符数组</strong></li>
+</ol>
+<h2 id="323-处理-string-对象中的字符">3.2.3 处理 string 对象中的字符</h2>
+<ol>
+<li>在 <strong>头文件 cctype</strong> 中定义了一组 <strong>标准库函数</strong> ： <strong>用于处理知道并改变某个字符的工作。</strong>
+头文件 cctype 中的部分函数及作用：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>isalnum(c)</td>
+<td>当 c 是字母或数字时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isalpha(c)</td>
+<td>当 c 是字母时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>iscntrl(c)</td>
+<td>当 c 是控制字符时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isdigit(c)</td>
+<td>当 c 是数字时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isgraph(c)</td>
+<td>当 c 不是空格但可以打印时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>islower(c)</td>
+<td>当 c 是小写字母时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isprint(c)</td>
+<td>当 c 是可打印字符时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>ispunct(c)</td>
+<td>当 c 是标点符号时（即 c 不是控制字符、数字、字母、可打印空白中的一种），返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isspace(c)</td>
+<td>当 c 是空白时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isupper(c)</td>
+<td>当 c 是大写字母时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>isxdigit(c)</td>
+<td>当 c 是十六进制数字时，返回 true ，否则返回 false</td>
+</tr>
+<tr>
+<td>tolower(c)</td>
+<td>如果 c 是大写字母，则返回对应的小写字母，否则原样输出</td>
+</tr>
+<tr>
+<td>toupper(c)</td>
+<td>如果 c 是小写字母，则返回对应的大写字母，否则原样输出</td>
+</tr>
+<tr>
+<td>2. <strong>C++11 新提供了一种新语句： 范围 for （range for）语句</strong> 。该语句会遍历给定序列中的所有元素，而且可以对每个元素执行相同的循环体代码。</td>
+<td></td>
+</tr>
+<tr>
+<td>格式如下：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code>for (declaration : expression)
+  statement
+</code></pre><p>其中 expression 部分是一个对象，用于表示一个序列。 declaration 部分负责定义一个变量，它将被用于访问序列中的元素， <strong>确保类型相融最简单的方法是使用 auto 类型说明符</strong>。
+注意：</p>
+<blockquote>
+<ol>
+<li><strong>每次迭代 ， decvlaration 部分的变量会被初始化为 expression 部分的下一个元素值。</strong></li>
+<li><strong>如果想通过 range for 修改对象内的值，就得将 range for 的变量声明为引用类型</strong>   。</li>
+<li><strong>range for 语句不能修改序列的长度</strong></li>
+</ol>
+</blockquote>
+<pre><code>int n[] = {2,3,4,5,6,7,8,9,0};
+for (auto &amp;nn : n)
+{
+	nn += nn;
+}
+</code></pre><ol start="3">
+<li>访问 string 对象中的单个字符有两种方式： <strong>①使用 <strong>下标运算符（<input disabled="" type="checkbox"> ）</strong> ；②使用迭代器。</strong></li>
+<li><strong>下标运算符接受的参数应该是 size_type 类型的值</strong> ，表达式的 <strong>返回值是该位置上字符的引用</strong> 。所以最好不用带符号类型，以免为负数。</li>
+<li><strong>如果对无值的位置使用下标运算符（<input disabled="" type="checkbox"> ），则结果是未定义的。</strong></li>
+<li><strong>逻辑运算符：与（&amp;&amp;）、或（|）、非（!），返回值为布尔类型。C++规定只有当左侧运算对象为真时，才会检查右侧运算对象。</strong></li>
+<li><strong>可以通过 string 类的成员函数 push_back 向 string 对象尾部添加单个字符。</strong></li>
+</ol>
+<hr>
+<h1 id="33-标准库类型-vector">3.3 标准库类型 vector</h1>
+<ol>
+<li><strong>标准库类型 vector 表示对象的集合，其中所有的对象的类型都相同。集合中每个元素都有对应的下标。</strong> 通常 vector 也被称为 <strong>“容器”（container）</strong> 。</li>
+<li>如果要使用 vector 类型，则要包含同名 <strong>头文件 vector</strong> 。</li>
+<li>C++ 既有 <strong>类模板（class template）</strong> ，也有 <strong>函数模板</strong> 。其中 <strong>vector</strong> 就是一个类模板。</li>
+<li><strong>模板本身不是类或函数</strong> ，可以将其看作编译器生成的类或函数编写的一份指南。 <strong>编译器根据模板创建类或函数的过程</strong> 和 <strong>通过类创建对象的过程</strong> 都被称为 <strong>实例化（instantiation）</strong> 。</li>
+<li><strong>当使用模板时，需要指出编译器应把类或函数实例化成什么类型。</strong>
+比如 vector ：</li>
+</ol>
+<pre><code>vector&lt;int&gt; in1;
+vector&lt;string&gt; s1;
+vector&lt;vector&lt;string&gt;&gt; vecs1;   //元素类型为 vector 对象
+</code></pre><ol start="6">
+<li>由于引用不是对象，所以 <strong>不存在包含引用的 vector</strong> 。</li>
+<li><strong>存在元素类型为 vector 的 vector 对象。</strong></li>
+<li>老式标准是，如果 vector 对象的元素类型是 vector （或其它模板类型），则声明的时候必须在外层 vector 与其元素类型之间添加一个空格。</li>
+</ol>
+<pre><code>vector&lt;vector&lt;int&gt; &gt; a;
+</code></pre><h2 id="331-定义和初始化-vector-对象">3.3.1 定义和初始化 vector 对象</h2>
+<ol>
+<li>常用的初始化 vector 对象的方式：   假设 T 是元素类型</li>
+</ol>
+<pre><code>vector&lt;T&gt; v1;                 //v1 是一个空 vector 对象，潜在的元素是 T 类型，执行默认初始化。
+vector&lt;T&gt; v2(v1);             //v2 包含 v1 的全部副本
+vector&lt;T&gt; v3 = v1;            //等价于上条语句
+vector&lt;T&gt; v4(n, val);         //v4 包含了 n 个重复的元素，每个元素值为 val 
+vector&lt;T&gt; v5(n);              //v5 包含了 n 个重复的元素，每个元素都执行了默认初始化
+vector&lt;T&gt; v6{a,b,c......}     //v6 包含了初始值个数的元素，每个元素都被赋予了相应的初始值
+vector&lt;T&gt; v7 = {a,b,c......}  //与上条语句等价
+</code></pre><ol start="2">
+<li>可以通过 <code>vector&lt;T&gt; v1;</code> 的方式默认初始化 vector 对象，从而创建一个指定类型的空 vector 。</li>
+<li><strong>vector 类型允许将一个 vector 对象赋值给另一个元素为同类型的 vector 对象。</strong></li>
+<li>C++11 提供列表初始化用于 vector 对象的初始化。</li>
+<li>如果提供的是初始元素值的列表，则只能把初始值都放在花括号里进行列表初始化，而不能放在用括号里。</li>
+<li>可以通过圆括号来初始化 vector 对象一组指定数量的元素值，第一个参数是指定的个数，第二个参数是元素值。 <strong>使用圆括号初始化时不能使用拷贝初始化（不能用 = ）。</strong>
+正确和错误的例子：</li>
+</ol>
+<pre><code>vector&lt;T&gt; vv(n, val);      //正确
+vector&lt;T&gt; vvss = (n, val); //错误
+</code></pre><ol start="7">
+<li>如果 <strong>只提供 vector 对象的元素数量</strong> 而不进行自定义的初始化， <strong>一般只能用圆括号进行直接初始化（不能用 = ）</strong> 。
+但是有 <strong>例外</strong> ， 如果 <strong>花括号</strong> 内有初始值，但类型不能用于列表初始化，却可以用于只指定元素数量直接初始化（不可以使用 = ）或指定元素值和数量拷贝初始化或直接初始化，此时可以用于构造 vector 对象。全部情况如下比如：</li>
+</ol>
+<pre><code>vector&lt;string&gt; s1{&quot;正确&quot;};
+vector&lt;string&gt; s2(&quot;错误&quot;);   //报错
+vector&lt;string&gt; s3{10};       //只指定元素数量直接初始化
+vector&lt;string&gt; s4{10, &quot;正确，指定元素值和数量直接初始化&quot;};
+vector&lt;string&gt; s5 = {10, &quot;正确，指定元素值和数量拷贝初始化&quot;};
+</code></pre><ol start="8">
+<li>只提供 vector 对象的元素数量而不提供初始值，此时库会创建一个 <strong>值初始化的（value-initialized）</strong> 元素初值，并把它赋给容器中的所有元素，该值由元素类型决定。 <strong>前提是该类型支持默认初始化。</strong></li>
+</ol>
+<h2 id="332-向-vector-对象中添加元素">3.3.2 向 vector 对象中添加元素</h2>
+<ol>
+<li>当 vector 对象的元素过多时， <strong>先定义一个空的 vector 对象</strong> ，然后通过以某个可控制的表达式为 while 语句的条件以方便结束，每次迭代通过 <strong>vector 类的成员函数 push_back(word)</strong> 将 word 添加到 vector 对象的结尾。</li>
+<li><strong>要求：如果循环体内部包含有向 vector 对象添加元素的语句，则不能使用范围 for 语句。</strong> 之前在 range for 也讲到其不能用于改变序列长度。</li>
+</ol>
+<h2 id="333-其它-vector-操作">3.3.3 其它 vector 操作</h2>
+<ol>
+<li>常用的 vector 对象的操作：</li>
+</ol>
+<pre><code>v.empty()              检查 v 是否为空，是返回 true ，否返回 false
+v.size()               返回 v 中元素个数，返回值类型为头文件 vector 里定义的 size_type 类型
+v.push_back()          向 v 的结尾添加元素
+v.[n]                  返回 v 中第 n+1 个元素的引用，注意是引用
+v1 = v2                将 v2 的值拷贝到 v1 中
+v1 = {a,b,c......}     用列表中的元素进行赋值，不是添加
+v1 == v2               判断两 vector 对象的元素数量和对应元素是否都相同
+v1 != v2               判断两 vector 对象的元素数量和对应元素是否有不同
+&gt; 、 &lt; 、 &gt;= 、 &lt;=     按字典顺序比较
+</code></pre><ol start="2">
+<li>可以使用范围 for 语句处理 vector 对象的每一个元素。</li>
+<li>能否比较的前提：两个 vector 的元素为同类型。
+同样地， <strong>vector 对象的比较也遵循字典顺序</strong> ：
+<blockquote>
+<ol>
+<li><strong>如果两个 vector 对象的长度不同，而且两个 vector 对象相同位置上的值相同，则较短的 vector 对象小于较长 vector 对象。</strong></li>
+<li><strong>如果两个 vector 对象在某些位置上不同，则 vector 对象比较的结果其实就是 vector 对象中第一对不同值比较的结果（。</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><strong>vector 对象的下标类型是头文件 vector 里定义的 size_type 类型。</strong></li>
+<li><strong>不能通过下标的形式为 vector 对象添加新元素，vector 和 string 对象的下标运算符只能用于访问已存在的元素。</strong> 否则会导致 <strong>缓冲区溢出（buffer overflow）</strong> 。</li>
+</ol>
+<hr>
+<h1 id="34-迭代器介绍">3.4 迭代器介绍</h1>
+<ol>
+<li><strong>迭代器（iterator）：</strong> 可使用迭代器的类型是 <strong>标准库容器或 string 类</strong> ，可使用迭代器访问对象中的某个元素，迭代器也能从一个元素移动到另一个元素。迭代器类似指针类型，提供了对对象的间接访问。</li>
+<li><strong>标准库定义了多个容器模板，每个容器都可以使用迭代器，但只有少数几种才同时支持下标运算符。</strong></li>
+<li><strong>迭代器有有效与无效之分</strong> ，有效的迭代器是 <strong>指向某个元素或指向容器中尾元素的下一个位置</strong> ，其它情况都为无效。</li>
+</ol>
+<h2 id="341-使用迭代器">3.4.1 使用迭代器</h2>
+<ol>
+<li><strong>有迭代器的类型，同时拥有返回迭代器的函数成员</strong> 。比如 <strong>这些类型都有名为 begin 和 end 的成员函数</strong> 。begin() 返回指向第一个元素（或字符）的迭代器。 end() 返回指向容器或 string 对象 <strong>“尾元素的下一位置（one past the end）”</strong> 的迭代器，这个迭代器通常被称为 <strong>尾后迭代器（off-the-end iterator）</strong> 。
+<blockquote>
+<p>如果容器或 string 对象为空，则成员函数 begin 和 end 返回的迭代器是 <strong>同一个迭代器</strong> 。</p>
+</blockquote>
+</li>
+<li>尾后迭代器指向的是容器或 string 对象的一个不存在的元素，该迭代器只能用作标记，表示处理完了迭代器。</li>
+<li>迭代器支持的一些运算：</li>
+</ol>
+<pre><code>*iter                   返回迭代器 iter 所指元素的引用
+iter -&gt; mem             解引用迭代器 iter 并获取该元素的名为 mem 元素的成员，等价于 (*iter).mem
+++iter                  令迭代器 iter 指向容器或 string 对象的下一个元素
+iter++                  令迭代器 iter 指向容器或 string 对象的下一个元素
+--iter                  令迭代器 iter 指向容器或 string 对象的上一个元素
+iter--                  令迭代器 iter 指向容器或 string 对象的上一个元素
+iter1 == iter1          判断两个迭代器是否相等（或不相等）
+iter1 != iter2          如果两个迭代器指向同一个容器或同一 string 对象的相同元素，或它们是同一个容器或同一 string 对象的尾后迭代器，则相同。
+</code></pre><ol start="4">
+<li><strong>通过解引用运算符（ * ）使迭代器获取它所指向元素的值，但是该迭代器必须合法且确实指向某个元素。解引用一个非法迭代器或者尾后迭代器都是未定义的行为。</strong></li>
+<li><strong>迭代器通过递增运算符（++）从一个元素移动到下一个元素。</strong></li>
+<li>因为 <strong>尾后迭代器并不指向实际的某个元素</strong> ，所以 <strong>不能使用解引用的操作。</strong></li>
+<li>拥有迭代器的标准库类型使用 <strong>iterator</strong> 和 <strong>const_iterator</strong> 来表示迭代器类型。其中 iterator 类型的迭代器是 <strong>可以访问并修改其指向的元素</strong> ，而 const_iterator 类型的迭代器 <strong>只能访问而不能修改其指向的元素</strong> 。</li>
+<li><strong>如果容器对象或 string 对象是常量，只能使用 const_iterator ；如果容器对象或 string 对象是不常量，则既能使用 iterator 也能使用 const_iterator 。</strong></li>
+<li>如何定义一个迭代器：</li>
+</ol>
+<pre><code>vector&lt;int&gt;::iterator it1;             //定义一个 iterator 类型的迭代器 it1 ，指向 vector&lt;int&gt; 对象
+string::iterator it2;                  //定义一个 iterator 类型的迭代器 it2 ，指向 string 对象
+auto it3 = a.begin();                  //定义一个 iterator 类型的迭代器 it3 ，指向 a 的第一个元素
+
+vector&lt;int&gt;::const_iterator it4;       //定义一个 const_iterator 类型的迭代器 it4 ，指向 vector&lt;int&gt; 对象
+string::const_iterator it5;            //定义一个 const_iterator 类型的迭代器 it5 ，指向 string 对象
+</code></pre><ol start="9">
+<li><strong>begin() 和 end() 返回的迭代器类型由对象是否为常量决定。如果对象是常量，则返回 const_iterator 类型的迭代器，如果对象不是常量，则返回 iterator 类型的迭代器。</strong></li>
+<li>C++11 新增两个容器模板和 string 类的成员函数： <strong>cbegin</strong> 和 <strong>cend</strong>  。它们的作用与 begin 和 end 一样， <strong>但是返回的迭代器类型一定为 const_iterator</strong> 。</li>
+<li><strong>箭头运算符（-&gt;）</strong> ：把 <strong>先解引用和再成员访问</strong> 两个操作结合起来。</li>
+<li><strong>可能改变 vector 对象长度的操作，比如 push_back ，都会使得之前定义的该 vector 对象的迭代器失效。</strong></li>
+</ol>
+<h2 id="342-迭代器运算">3.4.2 迭代器运算</h2>
+<ol>
+<li><strong>所有的标准库容器都支持 ++</strong> 。也能用关系运算符，对任意标准库类型的，指向同一个容器对象的两个有效迭代器进行比较。</li>
+<li>vector 和 string 的迭代器支持的运算：</li>
+</ol>
+<pre><code>iter + n                        迭代器加上一个整数的结果是一个迭代器。迭代器指向的元素位置与原来相比向后移动 n 个元素。
+iter - n                        迭代器减去一个整数的结果是一个迭代器。迭代器指向的元素位置与原来相比向前移动 n 个元素。
+iter += n                       迭代器加法的复合赋值语句
+iter -= n                       迭代器减法的复合赋值语句
+iter1 - iter2                   相减的前提是指向同一个容器对象或 string 对象的元素，或者指向同一个容器对象或 string 对象的尾元素的下一位。两个迭代器相减的结果是它们之间的距离。
+&lt; 、 &gt; 、 &lt;= 、 &gt;=              迭代器的比较，如果两个迭代器所指向的位置，越靠前的越小。前提是指向同一个容器对象或 string 对象的元素，或者指向同一个容器对象或 string 对象的尾元素的下一位。
+</code></pre><ol start="3">
+<li><strong>迭代器相减的结果</strong> 是一个名为 <strong>difference_type</strong> 类型的 <strong>带符号整数</strong> 。容器 vector 和 string 类都定义了 difference_type 。</li>
+<li>使用迭代器运算的一个经典算法是二分法。 <strong>中间点一般</strong> 是 <code>mid = beg + (end - beg)/2</code> ，而非  <code>mid = (end + beg)/2</code> 。
+<strong>原因是：</strong>
+<blockquote>
+<ol>
+<li>前者不会产生溢出，而后者可能会。</li>
+<li>前者适用于对迭代器的操作（迭代器相减），而后者（迭代器相加）不行，这个操作未定义，编译报错。</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h1 id="35-数组">3.5 数组</h1>
+<ol>
+<li>数组是一种类似标准库类型 vector 的数据结构，也是存放类型相同的对象的容器。是通过地址访问的。</li>
+<li>数组的大小是不变的。</li>
+</ol>
+<h2 id="351-定义和初始化内置数组">3.5.1 定义和初始化内置数组</h2>
+<ol>
+<li>数组是一种复合类型。数组的声明类似于 <code>T a[d]</code> ，其中 T 是存放的数据类型，a 是数组名，d 是数组的维度，也就是元素个数。 d 必须大于 0 。</li>
+<li><strong>数组的维度必须是常量表达式。</strong></li>
+<li>如果数组存放的数据的类型有定义默认初始化，则按照相应规则执行定义或未定义的默认初始化。</li>
+<li>数组的元素应该为对象，所以 <strong>不存在存放数据类型为引用的数组</strong> 。</li>
+<li><strong>不允许使用 auto 来通过初始值推断数组存放的数据类型。</strong></li>
+<li><strong>当对数组初始化时，未被初始化的元素将被初始化为默认初始值。</strong>
+数组有直接和拷贝初始化两种方式：</li>
+</ol>
+<pre><code>int a[10] = {1, 2, 3}; //初始化前三个元素，其它被初始化为 int 的默认初始值
+int a[10]  {1, 2, 3};   //与上面等价
+</code></pre><p>由上面的可知, <strong>如果想初始化全部为 0 ，可以使用空的列表初始化：</strong></p>
+<pre><code>unsigned scores[11]{};
+unsigned scores[11] = {};
+</code></pre><ol start="7">
+<li><strong>如果没有指明数组长度，编译器会通过初始值的长度推测出来。</strong>
+比如：</li>
+</ol>
+<pre><code>char ss[] = &quot;12345&quot;; //一共有6个元素，最后一个为空字符'\0'
+</code></pre><ol start="8">
+<li><strong>对于字符数组，可以使用特殊的初始值（字符串字面值）来初始化。字符数组的长度为字符串的字符个数 + 1，因为字符串字面值的最后一个字符是空字符。</strong></li>
+<li>注意：<strong>C++中的字符串字面值的类型不是 string 类型，是最后一个元素为空字符的字符数组</strong> ！！！</li>
+<li>不能将数组的内容通过用数组名赋值的方式拷贝给另外的数组。比如 <del><code>a = b;</code></del> ，这是错误的。</li>
+<li><strong>理解复杂的数组声明</strong> ：从数组的名字开始按照从内到外的顺序阅读。</li>
+</ol>
+<h2 id="352-访问数组元素">3.5.2 访问数组元素</h2>
+<ol>
+<li>数组元素可以通过下标运算符（<input disabled="" type="checkbox"> ）、范围 for 语句和解引用运算符（ * ）来访问。</li>
+<li>使用数组下标时，通常将其定义为 <strong>size_t</strong> 类型。 size_t 是 <strong>一种与机器相关的无符号类型</strong> ，该类型被设计得 <strong>足够大以便表示内存中任意对象的大小（数据大小）</strong> 。该类型在头文件 <strong>cstddef</strong> 中定义。</li>
+<li>数组的下标是否在合理范围内有程序员负责检查。</li>
+<li><strong>大多数常见的问题都是源于缓冲区的溢出错误。</strong> 当数组或其它类似数据结构的下标越界并试图访问非法内存区域时，就会产生该类错误。</li>
+</ol>
+<h2 id="353-数组与指针">3.5.3 数组与指针</h2>
+<ol>
+<li><strong>C++中，数组名储存数组首元素的地址。</strong> 所以数组名其实就是一个指向数组首元素的指针。</li>
+<li><strong>当初始值为数组名时，使用 auto 推断，返回类型是一个指向数组元素类型的指针。</strong></li>
+</ol>
+<pre><code>int scores [10]{};
+auto b(scores);       // b 的类型为 int * 。
+</code></pre><ol start="3">
+<li><strong>使用 decltype() 推断数组名时，返回的是数组类型和维度与该数组相同的数组类型。</strong></li>
+</ol>
+<pre><code>int scores [10]{};
+decltype(scores) a;    // a 的类型为 int [10] 。
+</code></pre><ol start="4">
+<li>容器 vector 和 string 类的迭代器支持的运算，数组的指针全都支持。</li>
+<li><strong>尾后指针：</strong> 数组尾元素指向的下一个位置，尾后指针不指向具体元素，所以 <strong>不能执行解引用或递增操作</strong>。</li>
+<li>C++11新增了关于数组的函数 begin() 和 end() ，与容器模板和 string 类不同的是，它们为 <strong>非成员函数</strong> ， <strong>返回值分别是首元素和尾元素下一位置的指针（地址）</strong> 。它们定义于头文件 <strong>iterator</strong> 。</li>
+<li><strong>指针比较：</strong> 只要两个指针 <strong>指向同一类型数组——这代表它们是同一类型的指针</strong> ，就能用关系运算符比较其前后关系， <strong>越靠前越大</strong> 。</li>
+<li>指针相减的前提是两个指针 <strong>指向同一类型对象或数组（维度可以不一样）</strong> ，相减的结果的类型是一种名为 <strong>ptrdiff_t</strong> 的标准库类型。与 size_t 一样定义在 <strong>cstddef</strong> 头文件，因为结果可能为负值，所以它是一种 <strong>带符号整型</strong> ，表示两指针之间差了多少个该类型元素。</li>
+<li>虽然指向相同类型不同对象的指针之间可以比较，但是 <strong>两个指向不同对象的指针比较一般是没有意义的</strong> 。</li>
+<li>指针运算使用于 <strong>空指针</strong> 。</li>
+<li>解引用和指针运算的交互： <code>a[4]</code> 等价于 <code>*(a+4)</code> 。</li>
+<li><strong>标准库类型限定使用的下标类型必须是无符号类型（也就是不能为负数）</strong> ，而 <strong>内置类型的下标不作限制</strong> 。 <em>比如数组的下标可以处理负值。</em></li>
+</ol>
+<pre><code>int a[4];
+int* p = &amp;a[3];
+int d = p[-2];
+</code></pre><h2 id="354-c风格字符串">3.5.4 C风格字符串</h2>
+<ol>
+<li>字符串字面值是一种通用结构的实例，这种结构是从C++从C语言继承而来的 <strong>C风格字符串（C-style character string）</strong> 。</li>
+<li>C风格字符串不是一种类型，而是一种写法——以空字符（'\0&rsquo;）结尾的 char 数组。</li>
+<li><strong>关于操作C风格字符串</strong> 的函数，被定义在 <strong>cstring</strong> 头文件中。这些函数的参数只能是C风格字符串，而不能是 string 类。
+比如：</li>
+</ol>
+<pre><code>strlen(p)               返回 p 的长度，不包括空字符。
+strcmp(p1, p2)          比较 p1 和 p2 是否相等，相等返回 0 ，如果 p1&gt;p2 ，返回一个正值，如果 p1&lt;p2 ，返回一个负值
+strcat(p1, p2)          将 p2 附加到 p1 之后，返回 p1 
+strcpy(p1, p2)          将 p2 拷贝给 p1 ，返回 p1 
+</code></pre><ol start="4">
+<li>C++中的 <strong>字符串字面值</strong> 是 <strong>const char 数组</strong> ，是 low-level const 。</li>
+<li><strong>C风格字符串的比较不能像 string 对象一样使用关系运算符进行比较</strong> ，因为这样实际上比较的是指针而非字符串本身。</li>
+</ol>
+<pre><code>const char ca1[] = &quot;hanhan&quot;;
+const char ca2[] = &quot;asasas&quot;;
+ca1 &lt; ca2 ; //比较的是地址，没有意义
+</code></pre><h2 id="355-与旧代码的接口">3.5.5 与旧代码的接口</h2>
+<ol>
+<li>混用 string 对象和C风格字符串
+<blockquote>
+<ol>
+<li>允许使用C风格字符串来初始化 string 对象或为 string 对象赋值；</li>
+<li>标准库允许把字符串字面值和字符字面值转换成 string 对象。当把 string 对象和字符字面值以及字符串字面值混在同一天语句中使用时，必须保证（+）的两个运算对象至少有一个是 string 对象。</li>
+<li>string 对象在使用复合赋值运算符时，右侧运算对象可以是C风格字符串。</li>
+</ol>
+</blockquote>
+</li>
+<li><strong>不可以用 string 对象来初始化C风格字符串。</strong></li>
+<li><strong>string 类</strong> 定义了一个 <strong>成员函数 c_str()</strong> 。 <strong>返回值是一个与 string 对象相同内容的C风格字符串的首地址</strong> ，也就是一个指针 <strong>（const char * ）</strong> 。
+该返回值是指向 string 对象的，当 string 对象发生改变时，之前 c_str() 返回指针指向的C风格字符串的内容也发生改变。</li>
+</ol>
+<pre><code>const char *a;
+a = ss.c_str();    //此时 a 为 &quot;hanhan&quot; 
+ss = &quot;ss&quot;;         //此时 a 为 &quot;ss&quot;
+</code></pre><p>所以最好别像上面代码一样使用 c_str() ，一旦 string 对象被析构，之前 c_str 返回的指针就成了无效指针。
+注意：一定要使用 strcpy() 函数等方法操作 c_str() 返回的指针</p>
+<pre><code>char a[20];
+strcpy(a, ss.c_str());    //此时 a 为 &quot;hanhan&quot; 
+</code></pre><ol start="4">
+<li><strong>不允许使用一个 vector 对象初始化一个数组。</strong></li>
+<li><strong>允许使用一个数组来初始化 vector 对象。</strong> 只需要数组首元素地址和尾后地址，然后使用圆括号直接初始化即可。</li>
+</ol>
+<pre><code>int a [] = {1,2,3,4};
+std::vector&lt;int&gt;  aa ( begin(a), end(a) );
+</code></pre><p>用于初始化 vector 对象的值可能也仅仅是数组的一部分。</p>
+<pre><code>int b [] = {1,2,3,4,5,6,7};
+std::vector&lt;int&gt;  bb ( &amp;b[3], &amp;b[5] );
+</code></pre><p>使用 <code>(首地址,尾地址)</code>  和 <strong>直接初始化</strong> ，可以使用数组的一部分或整个数组初始化 vector 对象。</p>
+<hr>
+<h1 id="36-多维数组">3.6 多维数组</h1>
+<ol>
+<li>多维数组其实是数组的数组。</li>
+<li>对于二维数组，常把第一个维度称作行，第二个维度称作列。</li>
+<li>多维数组的初始化：
+比如：</li>
+</ol>
+<pre><code>int ia [3][4] = {
+  {1,2,3,4}
+  {1,2,3,4}
+  {1,2,3,4}
+}
+//等价于
+int ia [3][4] = {1,2,3,4,1,2,3,4,1,2,3,4}
+</code></pre><p><strong>如果想初始化全部元素为默认初始值</strong> ，可以像下面代码一样定义。这样就不怕是在块内还是在全局作用域了（内置类型在块内不会执行默认初始化）。</p>
+<pre><code>int b[4][2][2] = {};
+</code></pre><p>与一维数组一样，无论以什么形式初始化多维数组，只要初始化时未被初始化的元素，就执行默认初始化。
+4. 当 <strong>数组名含有的下标运算符数量</strong> 比数组的第二个维度（几维数组）小，表达的是一个内层数组；一样多，表达的就是一个给定类型的元素。</p>
+<pre><code>int a[3][3][3] = {};
+int (&amp;aa)[3][3] = a[0];   // aa 是指向 a 内第二个二维数组的引用
+</code></pre><ol start="5">
+<li>通常会使用两层嵌套的 for 语句来处理二维数组，外层循环行，内层循环列。</li>
+<li>如何 <strong>使用嵌套的 range for 语句处理多维数组?</strong><br>
+<strong>要使用范围 for 语句处理多维数组时，除了最内层的循环外，其他所有循环的控制变量都必须是引用类型。</strong> 。
+<strong>如果要改变多维数组内元素的值，就得将最内层的控制变量声明为引用</strong> 。
+比如二维数组：</li>
+</ol>
+<pre><code>int aa[3][3] = {};
+for (auto &amp;n : aa)
+{
+      for (auto nn : n)
+      {
+            std::cout &lt;&lt; nn &lt;&lt;std::endl;
+      }
+}
+</code></pre><p>如果不设置除了最内层外的控制变量为引用，会出现什么情况？</p>
+<pre><code>for (auto n : aa)
+    for (auto nn : n)
+</code></pre><p>无法通过编译。 <strong>因为 range for 语句中的对象没被声明成引用类型</strong> ，编译器初始化它时， <strong>会将数组形式的元素转换成指向多维数组的首元素（指的是最外层数组的首元素）的指针</strong> 。比如在这里 n 会被声明为 int * ，而后续则是想在 int * 内遍历，这是错误的。
+7. 多维数组的名字，其实也是指向数组首元素的指针，也就是指向第一个内层数组的指针。如此类推。
+8. 使用类型别名，简化多维数组的指针声明。</p>
+<pre><code>using int_array4 = int[4];
+等价于
+typedef int int_array4 [4];
+</code></pre>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'>
+  </div>
+</footer>
+
+
+</article>
+
+<nav class='entry-nav'>
+  <div class='container'><div class='prev-entry sep-before'>
+      <a href='/c&#43;&#43;/primer_2/'>
+        <span aria-hidden='true'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="20" y1="12" x2="4" y2="12"/>
+  <polyline points="10 18 4 12 10 6"/>
+  
+</svg>
+ Previous</span>
+        <span class='screen-reader-text'>Previous post: </span>第二章 变量和基本类型</a>
+    </div></div>
+</nav>
+
+
+
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='https://github.com/NeutralAngler' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://facebook.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Facebook account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/%e7%a0%8d%e6%9f%b4%e7%9a%84%e8%8c%b6%e8%a8%80' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='mailto:contact@example.com' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://codepen.io/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Codepen account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+  <line x1="12" y1="22" x2="12" y2="15.5"/>
+  <polyline points="22 8.5 12 15.5 2 8.5"/>
+  <polyline points="2 15.5 12 8.5 22 15.5"/>
+  <line x1="12" y1="2" x2="12" y2="8.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/muniftanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://t.me/MunifTanjim' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Telegram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="m 22.05,1.577 c -0.393,-0.016 -0.784,0.08 -1.117,0.235 -0.484,0.186 -4.92,1.902 -9.41,3.64 C 9.263,6.325 7.005,7.198 5.267,7.867 3.53,8.537 2.222,9.035 2.153,9.059 c -0.46,0.16 -1.082,0.362 -1.61,0.984 -0.79581202,1.058365 0.21077405,1.964825 1.004,2.499 1.76,0.564 3.58,1.102 5.087,1.608 0.556,1.96 1.09,3.927 1.618,5.89 0.174,0.394 0.553,0.54 0.944,0.544 l -0.002,0.02 c 0,0 0.307,0.03 0.606,-0.042 0.3,-0.07 0.677,-0.244 1.02,-0.565 0.377,-0.354 1.4,-1.36 1.98,-1.928 l 4.37,3.226 0.035,0.02 c 0,0 0.484,0.34 1.192,0.388 0.354,0.024 0.82,-0.044 1.22,-0.337 0.403,-0.294 0.67,-0.767 0.795,-1.307 0.374,-1.63 2.853,-13.427 3.276,-15.38 L 23.676,4.725 C 23.972,3.625 23.863,2.617 23.18,2.02 22.838,1.723 22.444,1.593 22.05,1.576 Z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://scholar.google.com/citations?user=qc6CJjYAAAAJ' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Google_scholar account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M21.328 2.002v9.2M8.695 7.85c.014-.787-.11-2.236.28-2.89.623-1.045.856-1.39 1.797-1.989 1.953-.988 4.296.692 4.296.692.803.564 1.672 2.1 1.672 2.1l1.368-1.824-5.444-1.754-3.515 1.34L6.08 7.681m9.109 3.42s.65-.633 1.168-1.085c.461-.402.516-.714.6-.914.18-.426.268-.909.268-1.446 0-.7-.131-1.274-.388-1.735-.031-.053 0 0-.097-.157l4.588-3.762H10.32L3.672 7.85l5.023-.024c.23 1.237.619 1.575 1.019 2.222.744.719 1.13 1.194 2.215 1.194.254 0 2.6-.057 2.842-.09 0 0 .546 1.199-.133 1.71-.41.31.576 1.304.576 1.304s-5.577.831-6.523 1.427a4.13 4.13 0 0 0-1.306 1.277 3.034 3.034 0 0 0-.493 1.665c0 .502.106.955.32 1.357.214.403.493.733.84.99.345.258.744.473 1.194.649.45.174.896.297 1.342.367a8.348 8.348 0 0 0 3.41-.166 7.754 7.754 0 0 0 1.964-.807 4.28 4.28 0 0 0 1.49-1.443c.38-.609.57-1.292.57-2.049 0-.574-.116-1.096-.347-1.57a3.755 3.755 0 0 0-.847-1.164c-.335-.302-2.19-1.837-2.19-1.837"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCT-U0rNerYxItGcuoPX-WYA' target='_blank' rel='noopener'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section><div class='copyright'>
+  <p> &copy; 2020 NeutralAngler </p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.c3bcf2df.js'></script><script src='/js/custom.js'></script>
+
+</body>
+
+</html>
+
